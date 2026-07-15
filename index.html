@@ -356,6 +356,155 @@
     .section-title:first-of-type{margin-top:0;}
   }
 
+  /* ---------- Shared content sections (farewell + bible + game) ---------- */
+  .content-intro{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:13.5px;
+    color:var(--text);
+    line-height:1.6;
+    margin-bottom:18px;
+  }
+  .content-h2{font-size:15px;font-weight:700;margin:26px 0 12px;letter-spacing:-0.01em;}
+  .content-h2:first-of-type{margin-top:6px;}
+
+  /* ---------- Plan cards (farewell) ---------- */
+  .plan-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:16px 18px;
+    margin-bottom:12px;
+  }
+  .plan-card h3{font-size:14px;font-weight:600;margin:0 0 8px;}
+  .plan-card ul{margin:6px 0 0;padding-left:18px;}
+  .plan-card li{font-size:13px;margin-bottom:5px;color:var(--text);}
+  .plan-card p{font-size:13px;margin:4px 0;color:var(--text);}
+  .meal-label{font-weight:600;color:var(--primary);}
+  .focus-pill{
+    display:inline-block;background:var(--primary);color:#fff;
+    padding:3px 12px;border-radius:20px;font-size:11.5px;font-weight:600;margin-bottom:10px;
+  }
+  .plan-table{width:100%;border-collapse:collapse;margin:8px 0 4px;}
+  .plan-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-soft);border-bottom:1.5px solid var(--border);padding:6px 6px;}
+  .plan-table td{font-size:12.5px;padding:7px 6px;border-bottom:1px solid var(--surface-2);}
+  .plan-table td:nth-child(2),.plan-table td:nth-child(3){text-align:center;color:var(--text-soft);white-space:nowrap;}
+  .cardio-line{margin-top:10px;font-size:12px;color:var(--text-soft);font-style:italic;}
+  .plan-tip{
+    background:var(--surface-2);border:1px solid var(--border);border-radius:12px;
+    padding:12px 16px;font-size:12.5px;line-height:1.55;margin-top:14px;color:var(--text);
+  }
+  .plan-tip strong{color:var(--text);}
+
+  /* ---------- Sub-tabs (bible) ---------- */
+  .subtabs{display:flex;gap:8px;margin-bottom:16px;}
+  .subtab{
+    flex:1 1 auto;text-align:center;background:var(--surface);border:1px solid var(--border);
+    border-radius:10px;padding:9px 6px;font-size:12.5px;font-weight:600;color:var(--text-soft);
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .subtab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .subpane{display:none;}
+  .subpane.active{display:block;}
+
+  /* ---------- Progress bar (bible + game) ---------- */
+  .progress-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    box-shadow:var(--shadow);padding:14px 16px;margin-bottom:14px;
+  }
+  .progress-top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px;color:var(--text-soft);}
+  .progress-top b{color:var(--text);}
+  .progress-track{background:var(--surface-2);border-radius:20px;height:12px;overflow:hidden;}
+  .progress-fill{background:linear-gradient(90deg,var(--primary),#cc9f4c);height:100%;width:0;border-radius:20px;transition:width .4s;}
+
+  /* ---------- Depth toggle switch ---------- */
+  .depth-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .depth-row span{font-size:12.5px;font-weight:600;color:var(--text);}
+  .switch{position:relative;width:44px;height:25px;flex:0 0 auto;}
+  .switch input{opacity:0;width:0;height:0;}
+  .switch .track{position:absolute;inset:0;background:var(--border);border-radius:25px;transition:.25s;cursor:pointer;}
+  .switch .track::before{content:"";position:absolute;height:19px;width:19px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .switch input:checked + .track{background:var(--primary);}
+  .switch input:checked + .track::before{transform:translateX(19px);}
+
+  /* ---------- Bible filters ---------- */
+  .chip-filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px;-webkit-overflow-scrolling:touch;}
+  .chip-filters::-webkit-scrollbar{display:none;}
+  .filter-chip{flex:0 0 auto;background:var(--surface);border:1.5px solid var(--border);color:var(--text-soft);border-radius:20px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
+  .filter-chip.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+  /* ---------- Story cards ---------- */
+  .part-heading{font-size:13px;font-weight:700;margin:18px 4px 8px;display:flex;align-items:center;gap:8px;}
+  .part-heading .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+  .story-card{
+    background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--part-color,var(--primary));
+    border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;
+  }
+  .story-card.done{opacity:.6;}
+  .story-check{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:transparent;margin-top:2px;transition:.2s;-webkit-tap-highlight-color:transparent;}
+  .story-check.on{background:var(--part-color,var(--primary));border-color:transparent;color:#fff;}
+  .story-main{min-width:0;}
+  .story-title{font-weight:600;font-size:13.5px;}
+  .story-title .num{color:var(--text-soft);font-weight:400;margin-right:5px;}
+  .deeper-tag{display:inline-block;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;background:var(--surface-2);color:var(--text-soft);border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle;}
+  .story-summary{font-size:12.5px;color:var(--text-soft);margin:4px 0;line-height:1.45;}
+  .story-refs{font-size:11.5px;color:var(--text-soft);}
+  .story-refs b{color:var(--primary);}
+
+  /* ---------- Feelings ---------- */
+  .feel-search{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);font-size:14px;margin-bottom:14px;font-family:inherit;color:var(--text);}
+  .feel-search:focus{outline:none;border-color:var(--primary);}
+  .feel-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);margin-bottom:8px;overflow:hidden;}
+  .feel-head{padding:12px 14px;font-weight:600;font-size:13.5px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);-webkit-tap-highlight-color:transparent;}
+  .feel-head .plus{color:var(--primary);font-size:18px;flex:0 0 auto;margin-left:10px;}
+  .feel-body{display:none;padding:0 14px 14px;font-size:12.5px;}
+  .feel-body.open{display:block;}
+  .feel-verse{margin-bottom:9px;line-height:1.5;color:var(--text);}
+  .feel-verse:last-child{margin-bottom:0;}
+  .feel-ref{color:var(--primary);font-weight:600;}
+
+  /* ---------- Tips ---------- */
+  .tips-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:10px;font-size:13px;line-height:1.5;}
+  .tips-card h3{font-size:13.5px;margin:0 0 5px;color:var(--text);}
+
+  /* ---------- Game ---------- */
+  .game-hero{
+    background:linear-gradient(135deg,var(--primary),#cc9f4c);color:#fff;border-radius:16px;
+    padding:20px;box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .game-hero-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;}
+  .game-level{font-size:22px;font-weight:700;}
+  .game-streak{font-size:14px;font-weight:600;}
+  .game-xp-sub{font-size:12px;opacity:.92;margin-bottom:12px;}
+  .game-xp-track{background:rgba(255,255,255,.3);border-radius:20px;height:12px;overflow:hidden;}
+  .game-xp-fill{background:#fff;height:100%;width:0;border-radius:20px;transition:width .4s;}
+  .game-badges{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;-webkit-overflow-scrolling:touch;}
+  .game-badges::-webkit-scrollbar{display:none;}
+  .badge{flex:0 0 auto;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;min-width:80px;box-shadow:var(--shadow);}
+  .badge .b-emoji{font-size:22px;filter:grayscale(1);opacity:.35;}
+  .badge.on .b-emoji{filter:none;opacity:1;}
+  .badge .b-label{font-size:10px;color:var(--text-soft);margin-top:4px;line-height:1.2;}
+  .badge.on .b-label{color:var(--text);}
+  .quest-row{
+    background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--quest-color,var(--primary));
+    border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:center;
+  }
+  .quest-row.done{opacity:.58;}
+  .quest-check{flex:0 0 auto;width:26px;height:26px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:transparent;transition:.2s;-webkit-tap-highlight-color:transparent;}
+  .quest-check.on{background:var(--quest-color,var(--primary));border-color:transparent;color:#fff;}
+  .quest-main{min-width:0;flex:1 1 auto;}
+  .quest-title{font-weight:600;font-size:13.5px;}
+  .quest-sub{font-size:11.5px;color:var(--text-soft);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .quest-xp{flex:0 0 auto;font-size:11px;font-weight:700;color:var(--primary);background:var(--surface-2);border-radius:8px;padding:3px 8px;white-space:nowrap;}
+  .game-summary-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);
+    padding:14px 16px;margin-bottom:8px;cursor:pointer;
+  }
+  .game-summary-card:hover{border-color:var(--text-soft);}
+
   .hidden{display:none !important;}
 </style>
 </head>
@@ -409,6 +558,30 @@
       <div>
         <div class="schedule-nav-title">🗓️ Weekly view</div>
         <div class="schedule-nav-sub">See a whole week at a glance, with hours logged per day</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenGame">
+      <div>
+        <div class="schedule-nav-title">🎮 Quest game</div>
+        <div class="schedule-nav-sub">Tick off your workouts, habits &amp; Bible reading — earn XP, levels and streaks</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenFarewell">
+      <div>
+        <div class="schedule-nav-title">💪 Farewell prep plan</div>
+        <div class="schedule-nav-sub">Your eating plan and gym program for 23 September</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenBible">
+      <div>
+        <div class="schedule-nav-title">🕊️ My Bible journey</div>
+        <div class="schedule-nav-sub">Read the story like a child, then sit with the verse</div>
       </div>
       <div class="schedule-nav-arrow">→</div>
     </div>
@@ -484,6 +657,81 @@
     <div id="weekList"></div>
   </div>
 
+  <!-- ============ FAREWELL PREP PLAN SCREEN ============ -->
+  <div id="screenFarewell" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackFarewell">← Back to dashboard</button>
+    <h1 class="schedule-title">Farewell Prep Plan 💪</h1>
+    <p class="schedule-sub">Glutes, legs, back &amp; shoulders — strong for 23 September, and beyond.</p>
+    <div id="farewellBody"></div>
+  </div>
+
+  <!-- ============ BIBLE JOURNEY SCREEN ============ -->
+  <div id="screenBible" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackBible">← Back to dashboard</button>
+    <h1 class="schedule-title">My Bible Journey 🕊️</h1>
+    <p class="schedule-sub">Read the story like a child. Then sit with the verse.</p>
+
+    <div class="subtabs">
+      <div class="subtab active" data-pane="paneJourney">📖 Journey</div>
+      <div class="subtab" data-pane="paneFeelings">💛 Feelings</div>
+      <div class="subtab" data-pane="paneTips">✨ Tips</div>
+    </div>
+
+    <div class="subpane active" id="paneJourney">
+      <div class="progress-card">
+        <div class="progress-top"><span id="bibleProgressLabel">0 of 0 stories read</span><span>keep going 🤍</span></div>
+        <div class="progress-track"><div class="progress-fill" id="bibleProgressFill"></div></div>
+      </div>
+      <div class="depth-row">
+        <span>Show deeper stories too</span>
+        <label class="switch"><input type="checkbox" id="depthToggle"><span class="track"></span></label>
+      </div>
+      <div class="chip-filters" id="bibleFilters"></div>
+      <div id="bibleStoryList"></div>
+    </div>
+
+    <div class="subpane" id="paneFeelings">
+      <input type="text" class="feel-search" id="feelSearch" placeholder="🔍 How are you feeling? (anxious, tired, alone…)">
+      <div id="feelList"></div>
+    </div>
+
+    <div class="subpane" id="paneTips">
+      <div id="tipsList"></div>
+    </div>
+  </div>
+
+  <!-- ============ QUEST GAME SCREEN ============ -->
+  <div id="screenGame" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackGame">← Back to dashboard</button>
+    <h1 class="schedule-title">Quest Game 🎮</h1>
+    <p class="schedule-sub">Tick off everything you actually did. Earn XP, level up, keep your streak alive.</p>
+
+    <div class="game-hero">
+      <div class="game-hero-top">
+        <span class="game-level" id="gameLevel">Level 1</span>
+        <span class="game-streak" id="gameStreak">🔥 0</span>
+      </div>
+      <div class="game-xp-sub" id="gameXpSub">0 XP · 100 XP to level 2</div>
+      <div class="game-xp-track"><div class="game-xp-fill" id="gameXpFill"></div></div>
+    </div>
+
+    <div class="game-badges" id="gameBadges"></div>
+
+    <div class="content-h2">✅ Today's quests</div>
+    <div id="gameToday"></div>
+
+    <div class="content-h2">🏋️ This week's workouts</div>
+    <div class="week-nav">
+      <button class="week-nav-btn" id="btnGamePrevWeek">←</button>
+      <div class="week-range" id="gameWeekRange"></div>
+      <button class="week-nav-btn" id="btnGameNextWeek">→</button>
+    </div>
+    <div id="gameWeek"></div>
+
+    <div class="content-h2">🕊️ Bible journey</div>
+    <div id="gameBible"></div>
+  </div>
+
 </div>
 
 <div class="toast" id="toastBox"></div>
@@ -533,6 +781,7 @@
   var currentSubjects = [];
   var currentExams = [];
   var currentSchedule = [];
+  var checkoffMap = {};   /* item_key -> { id, done, done_on, _p } — backs the Bible ticks and the Quest Game */
 
   /* Study schedule SEED (from her teacher's plan, 21 Jul - 15 Sep 2026). Only ever written to the database once,
      the first time an account loads after the schedule_days table exists. primarySubject is just a colour accent, m is 1-indexed. */
@@ -596,6 +845,270 @@
     { y:2026, m:9, d:15, primarySubject:"IGO", exam:true,  text:"EKSAMEN: LO — GTA Deel B" }
   ];
 
+  /* ---------- Farewell prep plan (reference content) ---------- */
+  /* Gym program keyed by weekday: 0=Sun … 6=Sat. rest days have rest:true. */
+  var gymPlan = {
+    1: { day:"Monday", name:"Glutes & Legs (Heavy)", cardio:"10 min stairmaster", ex:[
+      ["Barbell or machine hip thrust","4","10–12"],
+      ["Bulgarian split squat","3","10 each leg"],
+      ["Romanian deadlift","3","10"],
+      ["Leg press (feet high/wide for glutes)","3","12"],
+      ["Cable glute kickback","3","12–15 each leg"]
+    ]},
+    2: { day:"Tuesday", name:"Back & Shoulders", cardio:"10 min bike", ex:[
+      ["Lat pulldown or assisted pull-up","4","10"],
+      ["Seated cable row","3","12"],
+      ["Dumbbell shoulder press","3","10"],
+      ["Face pulls","3","15"],
+      ["Lateral raises","3","15"],
+      ["Rear delt fly","3","15"]
+    ]},
+    3: { day:"Wednesday", name:"Glutes & Legs (Volume) + Core", cardio:"10 min incline treadmill walk", ex:[
+      ["Walking lunges","3","12 each leg"],
+      ["Hip thrust (lighter, higher reps)","3","15"],
+      ["Sumo squat (dumbbell/kettlebell)","3","12"],
+      ["Glute machine (abduction)","3","15"],
+      ["Plank","3","30–45 sec"],
+      ["Hanging or lying leg raises","3","12"]
+    ]},
+    4: { day:"Thursday", name:"Rest or block walk", rest:true, note:"Easy day. Optional 1km block walk. Recovery matters just as much as training." },
+    5: { day:"Friday", name:"Back & Shoulders + Core", cardio:"10 min stairmaster", ex:[
+      ["Single-arm dumbbell row","3","10 each side"],
+      ["Reverse pec deck / rear delt machine","3","15"],
+      ["Dumbbell shoulder press","3","10"],
+      ["Lateral raises","3","15"],
+      ["Cable woodchoppers","3","12 each side"],
+      ["Dead bug","3","10 each side"]
+    ]},
+    6: { day:"Saturday", name:"Glutes & Legs (Finisher-style)", cardio:"10 min bike", ex:[
+      ["Barbell hip thrust","4","10"],
+      ["Step-ups (with dumbbells)","3","10 each leg"],
+      ["Curtsy lunge","3","10 each leg"],
+      ["Standing calf raise","3","15"],
+      ["Cable kickback","3","15 each leg"]
+    ]},
+    0: { day:"Sunday", name:"Rest or block walk", rest:true, note:"Easy day. Optional 1km block walk." }
+  };
+  var gymWeekOrder = [1,2,3,4,5,6,0];
+
+  /* Daily healthy-eating habits shown as quests in the game. */
+  var dailyHabits = [
+    { slug:"protein", emoji:"🍗", title:"Protein at every meal", sub:"Eggs, tuna, chicken, yoghurt, biltong…" },
+    { slug:"onplan", emoji:"🥗", title:"Stayed on plan", sub:"Veg-forward, starch moderate, no skipped meals" }
+  ];
+
+  /* ---------- Bible journey ---------- */
+  /* Story index = position in this array = stable key ("bible:<index>"). Never reorder. */
+  var bibleStories = [
+    {part:"The Beginning", title:"Creation", summary:"God speaks the world into being — light, sky, sea, land, animals — and makes people to walk with Him.", story:"Genesis 1-2", verse:"Genesis 1:1, John 1:1-3", depth:"core"},
+    {part:"The Beginning", title:"Adam & Eve / The Fall", summary:"The first people are given one rule, break it, and hide from God — but He comes looking for them anyway.", story:"Genesis 3", verse:"Genesis 3:15", depth:"core"},
+    {part:"The Beginning", title:"Cain & Abel", summary:"Jealousy between the first brothers ends in the first murder — sin's cost shown early and plainly.", story:"Genesis 4", verse:"Genesis 4:7", depth:"core"},
+    {part:"The Beginning", title:"Noah's Ark", summary:"One family stays faithful in a corrupt world, and God saves them through a flood in a boat they built by faith.", story:"Genesis 6-9", verse:"Genesis 9:13", depth:"core"},
+    {part:"The Beginning", title:"Tower of Babel", summary:"People try to make a name for themselves reaching to heaven; God scatters them and confuses their language.", story:"Genesis 11", verse:"Genesis 11:4", depth:"core"},
+    {part:"The Beginning", title:"Abraham's Call", summary:"God tells an old man to leave everything he knows, promising to make him into a great nation.", story:"Genesis 12", verse:"Genesis 12:2-3", depth:"core"},
+    {part:"The Beginning", title:"Abraham & Isaac", summary:"God tests Abraham's trust by asking for his son back — and provides a way out at the last moment.", story:"Genesis 22", verse:"Genesis 22:14", depth:"core"},
+    {part:"The Beginning", title:"Jacob & Esau", summary:"Twin brothers, a stolen blessing, and years of running from the consequences.", story:"Genesis 25-27", verse:"Genesis 27:36", depth:"core"},
+    {part:"The Beginning", title:"Jacob Wrestles with God", summary:"Alone at night, Jacob wrestles a stranger till dawn and won't let go until he's blessed.", story:"Genesis 32", verse:"Genesis 32:28", depth:"core"},
+    {part:"The Beginning", title:"Joseph Sold into Slavery", summary:"A favourite son, a coat of many colours, and brothers who sell him out of envy.", story:"Genesis 37", verse:"Genesis 37:20", depth:"core"},
+    {part:"The Beginning", title:"Joseph Forgives His Brothers", summary:"Years later, the brother they betrayed has the power to destroy them — and chooses mercy instead.", story:"Genesis 41-45", verse:"Genesis 50:20", depth:"core"},
+    {part:"Freedom", title:"Moses in the Basket", summary:"A baby hidden in a basket on the Nile survives to be raised in the very palace that wanted him dead.", story:"Exodus 2", verse:"Exodus 2:24", depth:"core"},
+    {part:"Freedom", title:"The Burning Bush", summary:"God calls a reluctant shepherd from a bush that burns but is not consumed, and gives him His name.", story:"Exodus 3", verse:"Exodus 3:14", depth:"core"},
+    {part:"Freedom", title:"Plagues & Passover", summary:"Ten plagues break Pharaoh's grip, and the final night is survived only by blood on the doorframe.", story:"Exodus 7-12", verse:"Exodus 12:13", depth:"core"},
+    {part:"Freedom", title:"Crossing the Red Sea", summary:"Trapped between the sea and Pharaoh's army, the water splits and Israel walks through on dry ground.", story:"Exodus 14", verse:"Exodus 14:14", depth:"core"},
+    {part:"Freedom", title:"The Ten Commandments", summary:"God gives His people a way to live, carved in stone, on a mountain covered in smoke and fire.", story:"Exodus 20", verse:"Exodus 20:2-3", depth:"core"},
+    {part:"Freedom", title:"The Golden Calf", summary:"While Moses is on the mountain, the people melt their jewellery into an idol — and Moses pleads for them.", story:"Exodus 32", verse:"Exodus 32:14", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"The Twelve Spies", summary:"Twelve men scout the promised land; ten come back afraid, two trust God — and it changes a generation.", story:"Numbers 13-14", verse:"Numbers 14:9", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"The Bronze Serpent", summary:"Bitten and dying, the people are told to simply look at a bronze snake on a pole to live.", story:"Numbers 21", verse:"John 3:14-15", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"Joshua & Jericho", summary:"A city with walls too high to climb falls after seven days of marching and one shout.", story:"Joshua 6", verse:"Joshua 6:20", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"Gideon", summary:"An army of thousands is cut down to 300 so no one can say they won it themselves.", story:"Judges 6-7", verse:"Judges 6:12", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"Samson & Delilah", summary:"The strongest man alive is undone by the one secret he shouldn't have told.", story:"Judges 16", verse:"Judges 16:28", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"Ruth", summary:"A foreign widow's loyalty to her mother-in-law leads her into the family line of King David.", story:"Ruth 1-4", verse:"Ruth 1:16", depth:"core"},
+    {part:"Wilderness to Promised Land", title:"Hannah & Samuel", summary:"A woman who wept in prayer for a child gives that son back to God's service.", story:"1 Samuel 1-3", verse:"1 Samuel 1:27", depth:"core"},
+    {part:"Kings & Prophets", title:"David & Goliath", summary:"A shepherd boy with a sling faces a giant no soldier would fight — and wins in God's name.", story:"1 Samuel 17", verse:"1 Samuel 17:47", depth:"core"},
+    {part:"Kings & Prophets", title:"David Spares Saul", summary:"David has the chance to kill the king hunting him down, and chooses not to take it.", story:"1 Samuel 24", verse:"1 Samuel 24:6", depth:"core"},
+    {part:"Kings & Prophets", title:"David & Bathsheba", summary:"A king's affair and cover-up, and the raw, honest prayer of repentance that followed.", story:"2 Samuel 11-12", verse:"Psalm 51:10", depth:"core"},
+    {part:"Kings & Prophets", title:"Solomon's Wisdom", summary:"Given the chance to ask God for anything, Solomon asks for wisdom instead of wealth.", story:"1 Kings 3", verse:"1 Kings 3:9", depth:"core"},
+    {part:"Kings & Prophets", title:"Elijah vs the Prophets of Baal", summary:"One prophet against 450, and fire from heaven settles who the real God is.", story:"1 Kings 18", verse:"1 Kings 18:37", depth:"core"},
+    {part:"Kings & Prophets", title:"Elijah at Horeb", summary:"Exhausted and afraid, Elijah meets God not in the storm or fire, but in a whisper.", story:"1 Kings 19", verse:"1 Kings 19:12", depth:"core"},
+    {part:"Kings & Prophets", title:"Naaman Healed", summary:"A proud general is healed of leprosy only after he humbles himself to obey a strange instruction.", story:"2 Kings 5", verse:"2 Kings 5:14", depth:"core"},
+    {part:"Wisdom & Prophets", title:"Job's Suffering", summary:"A good man loses everything and still refuses to curse God — and is answered by God Himself.", story:"Job 1-2, 38-42", verse:"Job 42:2", depth:"core"},
+    {part:"Wisdom & Prophets", title:"Jonah & the Fish", summary:"A prophet runs from his calling, is swallowed by a great fish, and gets a second chance.", story:"Jonah 1-4", verse:"Jonah 2:6-7", depth:"core"},
+    {part:"Wisdom & Prophets", title:"Shadrach, Meshach & Abednego", summary:"Three men refuse to bow to an idol and are thrown into a furnace — and are not alone in it.", story:"Daniel 3", verse:"Daniel 3:17-18", depth:"core"},
+    {part:"Wisdom & Prophets", title:"Daniel in the Lion's Den", summary:"Caught praying against the law, Daniel is thrown to the lions and God shuts their mouths.", story:"Daniel 6", verse:"Daniel 6:22", depth:"core"},
+    {part:"Wisdom & Prophets", title:"Esther", summary:"A young queen risks her life to save her people, believing she was placed there for this moment.", story:"Esther 4-7", verse:"Esther 4:14", depth:"core"},
+    {part:"Wisdom & Prophets", title:"Isaiah's Vision of the Messiah", summary:"Centuries before Jesus, a prophet describes a suffering servant who would carry the world's pain.", story:"Isaiah 6, 53", verse:"Isaiah 53:5", depth:"core"},
+    {part:"Jesus' Life", title:"Birth of Jesus", summary:"God enters the world quietly — not in a palace, but a manger, to shepherds and a young couple.", story:"Luke 2:1-20", verse:"Luke 2:11", depth:"core"},
+    {part:"Jesus' Life", title:"Jesus in the Temple", summary:"At twelve, Jesus stays behind in Jerusalem, found in the temple asking questions that stun the teachers.", story:"Luke 2:41-52", verse:"Luke 2:49", depth:"core"},
+    {part:"Jesus' Life", title:"Jesus' Baptism", summary:"Jesus is baptised, the sky opens, and God speaks — this is My Son, with Him I am well pleased.", story:"Matthew 3", verse:"Matthew 3:17", depth:"core"},
+    {part:"Jesus' Life", title:"Temptation in the Wilderness", summary:"Alone and hungry after 40 days, Jesus faces the devil's offers and answers every one with Scripture.", story:"Matthew 4:1-11", verse:"Matthew 4:4", depth:"core"},
+    {part:"Jesus' Life", title:"Calling the Disciples", summary:"Fishermen drop their nets the moment Jesus says follow me — no résumé, no hesitation.", story:"Matthew 4:18-22", verse:"Matthew 4:19", depth:"core"},
+    {part:"Jesus' Life", title:"The Sermon on the Mount", summary:"Jesus teaches a whole new way to live — blessed are the poor in spirit, the mourning, the meek.", story:"Matthew 5-7", verse:"Matthew 6:33", depth:"core"},
+    {part:"Jesus' Life", title:"Jesus Calms the Storm", summary:"Terrified disciples wake a sleeping Jesus mid-storm; He says one word and the sea goes still.", story:"Mark 4:35-41", verse:"Mark 4:39-40", depth:"core"},
+    {part:"Jesus' Life", title:"Feeding the 5000", summary:"Five loaves and two fish, given to Jesus, become more than enough for thousands.", story:"John 6:1-14", verse:"John 6:9", depth:"core"},
+    {part:"Jesus' Life", title:"Jesus Walks on Water", summary:"Peter steps out of the boat onto the water toward Jesus — and sinks the moment he looks at the storm instead.", story:"Matthew 14:22-33", verse:"Matthew 14:31", depth:"core"},
+    {part:"Jesus' Life", title:"The Good Samaritan", summary:"A parable about who your neighbour really is — and it's the person you'd least expect to help.", story:"Luke 10:25-37", verse:"Luke 10:37", depth:"core"},
+    {part:"Jesus' Life", title:"The Prodigal Son", summary:"A son wastes everything and comes home ashamed — and his father runs to meet him before he even arrives.", story:"Luke 15:11-32", verse:"Luke 15:20", depth:"core"},
+    {part:"Jesus' Life", title:"The Woman at the Well", summary:"Jesus speaks to a woman everyone else avoided, and offers her water that means she'll never thirst again.", story:"John 4:1-42", verse:"John 4:14", depth:"core"},
+    {part:"Jesus' Life", title:"Jesus Heals the Blind Man", summary:"A man born blind is healed and questioned relentlessly — his answer stays simple: I was blind, now I see.", story:"John 9", verse:"John 9:25", depth:"core"},
+    {part:"Jesus' Life", title:"Lazarus Raised", summary:"Jesus arrives after His friend has already died, weeps with the family, then calls him out of the tomb.", story:"John 11:1-44", verse:"John 11:25-26", depth:"core"},
+    {part:"Jesus' Life", title:"Zacchaeus", summary:"A short, hated tax collector climbs a tree just to see Jesus — and Jesus invites Himself to his house.", story:"Luke 19:1-10", verse:"Luke 19:10", depth:"core"},
+    {part:"Jesus' Life", title:"Triumphal Entry", summary:"Jesus rides into Jerusalem on a donkey to shouts of praise, days before those same crowds turn on Him.", story:"Matthew 21:1-11", verse:"Matthew 21:9", depth:"core"},
+    {part:"Jesus' Life", title:"The Last Supper", summary:"Jesus shares a final meal with His disciples, washes their feet, and gives them bread and wine to remember Him by.", story:"Matthew 26:17-30", verse:"Luke 22:19", depth:"core"},
+    {part:"Jesus' Life", title:"Gethsemane", summary:"The night before His death, Jesus prays in anguish — not my will, but Yours be done.", story:"Matthew 26:36-46", verse:"Matthew 26:39", depth:"core"},
+    {part:"Jesus' Life", title:"The Crucifixion", summary:"Jesus is beaten, mocked, and crucified — and still asks forgiveness for those doing it.", story:"John 19:16-37", verse:"John 19:30", depth:"core"},
+    {part:"Jesus' Life", title:"The Resurrection", summary:"Three days later the tomb is empty, and Jesus appears alive — death didn't hold.", story:"John 20:1-18", verse:"John 20:29", depth:"core"},
+    {part:"Jesus' Life", title:"Road to Emmaus", summary:"Two grieving disciples walk with the risen Jesus for miles and don't recognise Him until He breaks bread.", story:"Luke 24:13-35", verse:"Luke 24:32", depth:"core"},
+    {part:"Jesus' Life", title:"The Great Commission", summary:"Before ascending, Jesus sends His followers out with a promise: I am with you always.", story:"Matthew 28:16-20", verse:"Matthew 28:20", depth:"core"},
+    {part:"The Church Begins", title:"Pentecost", summary:"The Holy Spirit arrives like fire and wind, and a small scared group becomes a bold, unstoppable church.", story:"Acts 2", verse:"Acts 2:4", depth:"core"},
+    {part:"The Church Begins", title:"Peter Heals a Lame Man", summary:"With no money to give, Peter offers something better — and a man who never walked, walks.", story:"Acts 3:1-10", verse:"Acts 3:6", depth:"core"},
+    {part:"The Church Begins", title:"Stephen, the First Martyr", summary:"Stephen is stoned for his faith and dies forgiving the people killing him, just as Jesus did.", story:"Acts 7", verse:"Acts 7:60", depth:"core"},
+    {part:"The Church Begins", title:"Saul's Conversion", summary:"The church's fiercest persecutor is blinded by light on the road to Damascus and becomes its greatest missionary.", story:"Acts 9:1-19", verse:"Acts 9:15", depth:"core"},
+    {part:"The Church Begins", title:"Peter's Vision", summary:"God shows Peter that His good news isn't only for one people — everyone is welcome now.", story:"Acts 10", verse:"Acts 10:34-35", depth:"core"},
+    {part:"The Church Begins", title:"Paul & Silas in Prison", summary:"Beaten and chained, they sing and pray at midnight — and an earthquake breaks every chain in the jail.", story:"Acts 16:16-34", verse:"Acts 16:25", depth:"core"},
+    {part:"The Church Begins", title:"Paul's Shipwreck", summary:"In a violent storm at sea, Paul stays calm, trusting a promise no one else can see yet.", story:"Acts 27", verse:"Acts 27:25", depth:"core"},
+    {part:"The Beginning", title:"Hagar & Ishmael", summary:"Cast out into the desert, alone and desperate, Hagar is met and seen by God when no one else sees her.", story:"Genesis 16, 21", verse:"Genesis 16:13", depth:"deeper"},
+    {part:"The Beginning", title:"Lot & Sodom", summary:"Two cities are destroyed for their wickedness, and Lot's family is warned not to look back.", story:"Genesis 19", verse:"Genesis 19:16", depth:"deeper"},
+    {part:"The Beginning", title:"Jacob's Wives, Leah & Rachel", summary:"Tricked into marrying the wrong sister first, Jacob's family becomes a tangle of rivalry and love.", story:"Genesis 29", verse:"Genesis 29:20", depth:"deeper"},
+    {part:"The Beginning", title:"Joseph Interprets Dreams", summary:"From a prison cell, Joseph reads Pharaoh's dreams correctly and is lifted to second-in-command of Egypt overnight.", story:"Genesis 40-41", verse:"Genesis 41:16", depth:"deeper"},
+    {part:"Freedom", title:"Manna & Quail", summary:"In the desert with no food, God rains down bread from heaven every single morning.", story:"Exodus 16", verse:"Exodus 16:4", depth:"deeper"},
+    {part:"Freedom", title:"Water from the Rock", summary:"Dying of thirst, the people watch Moses strike a rock and water pours out for everyone.", story:"Exodus 17:1-7", verse:"Exodus 17:6", depth:"deeper"},
+    {part:"Freedom", title:"Aaron's Staff Buds", summary:"To settle who God had really chosen as priest, one dry stick miraculously blooms overnight.", story:"Numbers 17", verse:"Numbers 17:8", depth:"deeper"},
+    {part:"Freedom", title:"Balaam's Donkey", summary:"A prophet hired to curse Israel is stopped mid-journey by his own donkey, who sees an angel he can't.", story:"Numbers 22-24", verse:"Numbers 22:28", depth:"deeper"},
+    {part:"Freedom", title:"Moses' Death", summary:"After 40 years leading his people, Moses sees the promised land from a mountain but doesn't enter it himself.", story:"Deuteronomy 34", verse:"Deuteronomy 34:10", depth:"deeper"},
+    {part:"Wilderness to Promised Land", title:"Rahab & the Spies", summary:"A woman with a reputation hides Israel's spies and asks only to be remembered when the city falls.", story:"Joshua 2", verse:"Joshua 2:11", depth:"deeper"},
+    {part:"Wilderness to Promised Land", title:"Achan's Sin", summary:"One man's hidden theft after Jericho brings defeat on the whole camp, showing how sin isn't only personal.", story:"Joshua 7", verse:"Joshua 7:20-21", depth:"deeper"},
+    {part:"Wilderness to Promised Land", title:"Deborah", summary:"A prophet and judge leads Israel into battle when no man will, and the victory is won through her and another woman, Jael.", story:"Judges 4-5", verse:"Judges 4:14", depth:"deeper"},
+    {part:"Kings & Prophets", title:"Saul Chosen as King", summary:"Israel demands a king like other nations, and God gives them Saul — tall, impressive, and eventually a warning.", story:"1 Samuel 9-10", verse:"1 Samuel 10:1", depth:"deeper"},
+    {part:"Kings & Prophets", title:"David & Jonathan", summary:"The king's son and the shepherd who'll replace him become the closest of friends instead of rivals.", story:"1 Samuel 18-20", verse:"1 Samuel 18:1", depth:"deeper"},
+    {part:"Kings & Prophets", title:"Absalom's Rebellion", summary:"David's own son turns the kingdom against him, and a father's grief outweighs even his throne.", story:"2 Samuel 15-18", verse:"2 Samuel 18:33", depth:"deeper"},
+    {part:"Kings & Prophets", title:"Elisha's Double Portion", summary:"As Elijah is taken up in a whirlwind, Elisha asks for a double share of his spirit to carry on the work.", story:"2 Kings 2", verse:"2 Kings 2:9", depth:"deeper"},
+    {part:"Kings & Prophets", title:"The Shunammite's Son", summary:"A woman's kindness to Elisha is repaid when her son, who died, is brought back to life.", story:"2 Kings 4:8-37", verse:"2 Kings 4:16", depth:"deeper"},
+    {part:"Kings & Prophets", title:"Hezekiah's Prayer", summary:"Told he will die, King Hezekiah weeps and prays — and is given 15 more years of life.", story:"2 Kings 20:1-11", verse:"2 Kings 20:5", depth:"deeper"},
+    {part:"Wisdom & Prophets", title:"Valley of Dry Bones", summary:"Ezekiel sees a valley of dead, dry bones come alive again — a picture of hope for a hopeless people.", story:"Ezekiel 37:1-14", verse:"Ezekiel 37:5", depth:"deeper"},
+    {part:"Wisdom & Prophets", title:"Habakkuk's Complaint & Trust", summary:"A prophet asks God hard, honest questions about suffering — and chooses to trust before he gets every answer.", story:"Habakkuk 1, 3", verse:"Habakkuk 3:17-18", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Sower", summary:"A parable about the same seed landing on different ground — and what determines whether it grows.", story:"Matthew 13:1-23", verse:"Matthew 13:23", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Lost Sheep", summary:"A shepherd leaves 99 safe sheep to go find the one that wandered off.", story:"Luke 15:1-7", verse:"Luke 15:7", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Talents", summary:"Three servants are given different amounts to manage — and it's faithfulness, not the amount, that's rewarded.", story:"Matthew 25:14-30", verse:"Matthew 25:21", depth:"deeper"},
+    {part:"Jesus' Life", title:"Workers in the Vineyard", summary:"Workers hired at the end of the day are paid the same as those who worked since morning — grace isn't fair, it's generous.", story:"Matthew 20:1-16", verse:"Matthew 20:15", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Persistent Widow", summary:"A widow keeps asking an unjust judge for justice until he gives in — a lesson on not giving up in prayer.", story:"Luke 18:1-8", verse:"Luke 18:1", depth:"deeper"},
+    {part:"Jesus' Life", title:"Pharisee & Tax Collector", summary:"One prays about how good he is; the other just asks for mercy — and it's the second one who goes home right with God.", story:"Luke 18:9-14", verse:"Luke 18:14", depth:"deeper"},
+    {part:"Jesus' Life", title:"Jairus' Daughter", summary:"A desperate father's daughter dies while Jesus is delayed helping someone else — and Jesus raises her anyway.", story:"Mark 5:21-43", verse:"Mark 5:36", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Centurion's Servant", summary:"A Roman officer says just say the word and my servant will be healed — and Jesus marvels at his faith.", story:"Matthew 8:5-13", verse:"Matthew 8:10", depth:"deeper"},
+    {part:"Jesus' Life", title:"Ten Lepers Healed", summary:"Ten are healed on the way; only one, a Samaritan, comes back to say thank you.", story:"Luke 17:11-19", verse:"Luke 17:17-18", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Transfiguration", summary:"Jesus' appearance changes to dazzling light in front of three disciples, and God's voice speaks again from a cloud.", story:"Matthew 17:1-9", verse:"Matthew 17:5", depth:"deeper"},
+    {part:"Jesus' Life", title:"Mary Anoints Jesus", summary:"Mary pours expensive perfume on Jesus' feet before His death; Jesus says her act will be remembered forever.", story:"John 12:1-8", verse:"John 12:3", depth:"deeper"},
+    {part:"Jesus' Life", title:"Judas' Betrayal", summary:"For thirty pieces of silver, one of Jesus' own closest friends hands Him over.", story:"Matthew 26:14-16, 47-50", verse:"Matthew 26:50", depth:"deeper"},
+    {part:"Jesus' Life", title:"Peter's Denial", summary:"The disciple who swore he'd never leave Jesus denies knowing Him three times before dawn.", story:"Matthew 26:69-75", verse:"Luke 22:61-62", depth:"deeper"},
+    {part:"Jesus' Life", title:"Doubting Thomas", summary:"Thomas won't believe the resurrection until he sees the wounds himself — and Jesus lets him.", story:"John 20:24-29", verse:"John 20:29", depth:"deeper"},
+    {part:"Jesus' Life", title:"Jesus & the Children", summary:"Disciples try to shoo children away from Jesus; He calls them back and blesses them instead.", story:"Mark 10:13-16", verse:"Mark 10:14", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Rich Young Ruler", summary:"A wealthy, well-behaved young man asks how to inherit eternal life, and walks away sad at Jesus' answer.", story:"Mark 10:17-27", verse:"Mark 10:27", depth:"deeper"},
+    {part:"Jesus' Life", title:"The Widow's Mite", summary:"While the rich give from their surplus, a poor widow gives two small coins — everything she has.", story:"Mark 12:41-44", verse:"Mark 12:43-44", depth:"deeper"},
+    {part:"The Church Begins", title:"Paul's First Missionary Journey", summary:"Paul and Barnabas set out city to city, preaching, planting churches, and facing real opposition along the way.", story:"Acts 13-14", verse:"Acts 13:47", depth:"deeper"},
+    {part:"The Church Begins", title:"The Jerusalem Council", summary:"The early church wrestles with a hard question — what to require of new believers — and settles it together.", story:"Acts 15:1-35", verse:"Acts 15:11", depth:"deeper"},
+    {part:"The Church Begins", title:"Lydia's Conversion", summary:"A businesswoman listening by a riverside becomes the first convert in Europe, opening her home to the church.", story:"Acts 16:11-15", verse:"Acts 16:14", depth:"deeper"},
+    {part:"The Church Begins", title:"Paul at Athens", summary:"Standing before Greek philosophers, Paul points to their own altar 'to an unknown God' to introduce them to the real one.", story:"Acts 17:16-34", verse:"Acts 17:27-28", depth:"deeper"},
+    {part:"The Church Begins", title:"Priscilla, Aquila & Apollos", summary:"A humble couple quietly corrects a gifted preacher's teaching, and he becomes even more effective for it.", story:"Acts 18:1-3, 18-26", verse:"Acts 18:26", depth:"deeper"}
+  ];
+
+  var biblePartColors = {
+    "The Beginning": "#b76e56",
+    "Freedom": "#7f9866",
+    "Wilderness to Promised Land": "#cc9f4c",
+    "Kings & Prophets": "#9a84ad",
+    "Wisdom & Prophets": "#c98686",
+    "Jesus' Life": "#7b97ab",
+    "The Church Begins": "#8fa876"
+  };
+
+  var bibleEmotions = [
+    {feel:"Anxious or worried", verses:[
+      {ref:"Philippians 4:6-7", text:"Don't be anxious about anything — bring it to God in prayer, and His peace will guard your heart."},
+      {ref:"Matthew 6:34", text:"Don't worry about tomorrow — today has enough to deal with on its own."},
+      {ref:"1 Peter 5:7", text:"Cast all your anxiety on Him, because He cares for you."}
+    ]},
+    {feel:"Afraid", verses:[
+      {ref:"Joshua 1:9", text:"Be strong and courageous — do not be afraid, for the Lord your God is with you wherever you go."},
+      {ref:"Isaiah 41:10", text:"Do not fear, for I am with you; I will strengthen and help you."},
+      {ref:"Psalm 56:3", text:"When I am afraid, I will trust in You."}
+    ]},
+    {feel:"Sad or grieving", verses:[
+      {ref:"Psalm 34:18", text:"The Lord is close to the brokenhearted and saves those crushed in spirit."},
+      {ref:"Matthew 5:4", text:"Blessed are those who mourn, for they will be comforted."},
+      {ref:"Psalm 147:3", text:"He heals the brokenhearted and binds up their wounds."}
+    ]},
+    {feel:"Doubting or confused", verses:[
+      {ref:"Proverbs 3:5-6", text:"Trust in the Lord with all your heart and lean not on your own understanding."},
+      {ref:"James 1:5", text:"If you lack wisdom, ask God, who gives generously without finding fault."},
+      {ref:"Mark 9:24", text:"I believe — help my unbelief. (An honest prayer when your faith feels small.)"}
+    ]},
+    {feel:"Guilty or ashamed", verses:[
+      {ref:"1 John 1:9", text:"If we confess our sins, He is faithful and just to forgive us and cleanse us."},
+      {ref:"Romans 8:1", text:"There is no condemnation for those who are in Christ Jesus."},
+      {ref:"Psalm 103:12", text:"As far as the east is from the west, so far has He removed our sins from us."}
+    ]},
+    {feel:"Lonely", verses:[
+      {ref:"Deuteronomy 31:6", text:"He will never leave you nor forsake you."},
+      {ref:"Psalm 68:6", text:"God sets the lonely in families."},
+      {ref:"Matthew 28:20", text:"I am with you always, to the very end of the age."}
+    ]},
+    {feel:"Tired or overwhelmed (exam season)", verses:[
+      {ref:"Matthew 11:28-30", text:"Come to Me, all who are weary and burdened, and I will give you rest."},
+      {ref:"Isaiah 40:31", text:"Those who hope in the Lord will renew their strength; they will soar like eagles."},
+      {ref:"Philippians 4:13", text:"I can do all things through Christ who strengthens me."}
+    ]},
+    {feel:"Tempted", verses:[
+      {ref:"1 Corinthians 10:13", text:"No temptation has overtaken you except what is common — God will provide a way out."},
+      {ref:"Hebrews 4:15-16", text:"Jesus understands our weaknesses and invites us to approach Him with confidence."}
+    ]},
+    {feel:"Grateful", verses:[
+      {ref:"Psalm 100:4-5", text:"Enter His gates with thanksgiving — the Lord is good, His love endures forever."},
+      {ref:"1 Thessalonians 5:18", text:"Give thanks in all circumstances; this is God's will for you."}
+    ]},
+    {feel:"Needing courage", verses:[
+      {ref:"Deuteronomy 31:6", text:"Be strong and courageous; do not be afraid of them."},
+      {ref:"Joshua 1:9", text:"Have I not commanded you? Be strong and courageous."},
+      {ref:"Philippians 4:13", text:"I can do all things through Christ who strengthens me."}
+    ]},
+    {feel:"Wanting guidance / direction", verses:[
+      {ref:"Psalm 32:8", text:"I will instruct you and teach you in the way you should go."},
+      {ref:"Proverbs 16:3", text:"Commit to the Lord whatever you do, and He will establish your plans."},
+      {ref:"Proverbs 3:5-6", text:"Trust in the Lord and He will make your paths straight."}
+    ]},
+    {feel:"Weak faith", verses:[
+      {ref:"Mark 9:24", text:"I believe — help my unbelief."},
+      {ref:"Hebrews 11:1", text:"Faith is confidence in what we hope for and assurance about what we do not see."}
+    ]},
+    {feel:"Angry", verses:[
+      {ref:"Ephesians 4:26", text:"In your anger do not sin — do not let the sun go down while you are still angry."},
+      {ref:"James 1:19-20", text:"Be quick to listen, slow to speak and slow to become angry."}
+    ]},
+    {feel:"Feeling unworthy or insecure", verses:[
+      {ref:"Psalm 139:14", text:"I am fearfully and wonderfully made."},
+      {ref:"Jeremiah 1:5", text:"Before I formed you in the womb I knew you."},
+      {ref:"Ephesians 2:10", text:"We are God's handiwork, created for good works He prepared in advance."}
+    ]}
+  ];
+
+  var bibleTips = [
+    {h:"🙏 Before you read", t:"Pray one line first: \"God, help me understand and meet You here.\" That's it — you don't need eloquent words."},
+    {h:"📖 Read it like a child first", t:"Just read the story. Don't analyse yet. Picture it happening. Who's there? What do they do? Let it be a story before it becomes a lesson."},
+    {h:"💭 Then sit with the linked verse", t:"Ask: what does this tell me about who God is? Is there anything here for me today? One honest answer is enough."},
+    {h:"🌤️ Why you forget what you read", t:"Completely normal — not a sign you're bad at this. Understanding builds through repetition, not one read-through. Each pass, more sticks."},
+    {h:"🗣️ To help it stick", t:"After reading, say the story back to yourself in your own words, like you're telling a friend. Best way to remember it."},
+    {h:"🐢 Pace", t:"Aim for 2-3 stories a week, not one a day. Meant to outlast your exams. Missing days doesn't break anything — just come back."},
+    {h:"🎮 Track it in the Quest Game", t:"Ticking a story here also counts in your Quest Game — every story read earns XP and helps your streak."}
+  ];
+
+  /* ---------- Game (XP / levels / streak) ---------- */
+  var XP_WORKOUT = 15, XP_HABIT = 5, XP_STORY = 10, XP_PER_LEVEL = 100;
+  var gameBadgeDefs = [
+    { emoji:"👟", label:"First move", test:function(st){ return (st.workouts + st.habits + st.stories) >= 1; } },
+    { emoji:"🏋️", label:"5 workouts", test:function(st){ return st.workouts >= 5; } },
+    { emoji:"🔥", label:"3-day streak", test:function(st){ return st.streak >= 3; } },
+    { emoji:"📖", label:"10 stories", test:function(st){ return st.stories >= 10; } },
+    { emoji:"⭐", label:"Reach level 5", test:function(st){ return st.level >= 5; } }
+  ];
+
   function localDate(y, m, d){
     // m is 1-indexed on purpose so the data above reads naturally; JS Date wants 0-indexed months.
     return new Date(y, m - 1, d, 0, 0, 0, 0);
@@ -613,6 +1126,12 @@
   function startOfToday(){
     var now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  }
+  function isoOfDate(dateObj){
+    return toIsoDate(dateObj.getFullYear(), dateObj.getMonth() + 1, dateObj.getDate());
+  }
+  function isoToday(){
+    return isoOfDate(new Date());
   }
   var monthShortNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   function formatDate(dateObj){
@@ -771,6 +1290,19 @@
     });
   }
 
+  function loadCheckoffs(){
+    return sbClient.from("checkoffs").select("*").then(function(result){
+      checkoffMap = {};
+      if (result.error){
+        showToast("Couldn't load your ticked-off items — check your internet and try again.");
+        return;
+      }
+      result.data.forEach(function(row){
+        checkoffMap[row.item_key] = { id: row.id, done: row.done, done_on: row.done_on, _p: null };
+      });
+    });
+  }
+
   function loadDashboardData(){
     return ensureSubjectsSeeded().then(function(subjectsRows){
       currentSubjects = subjectsRows.slice().sort(function(a, b){ return a.position - b.position; });
@@ -779,9 +1311,46 @@
         return ensureScheduleSeeded().then(function(scheduleRows){
           currentSchedule = scheduleRows.map(scheduleRowToEntry);
           sortSchedule();
+          return loadCheckoffs();
         });
       });
     });
+  }
+
+  /* ---------- Checkoff persistence: select-then-insert/update, never upsert ----------
+     Each item is keyed by a stable string (e.g. "bible:12", "gym:2026-08-17",
+     "habit:2026-08-17:protein"). Writes are chained per key so a brand-new row's
+     insert settles (and gets its id) before any follow-up update fires — same race
+     guard the block planner uses. Toggling off keeps the row with done=false. */
+  function isChecked(itemKey){
+    var s = checkoffMap[itemKey];
+    return !!(s && s.done);
+  }
+
+  function writeCheckoff(itemKey, isDone){
+    var state = checkoffMap[itemKey];
+    if (!state){
+      state = checkoffMap[itemKey] = { id: null, done: false, done_on: null, _p: null };
+    }
+    state.done = isDone;
+    if (isDone) state.done_on = isoToday();
+
+    var run = function(){
+      if (state.id){
+        return sbClient.from("checkoffs").update({ done: state.done, done_on: state.done_on }).eq("id", state.id).then(function(r){
+          if (r.error) showToast("Couldn't save that — check your internet and try again.");
+        });
+      }
+      return sbClient.from("checkoffs").insert({ item_key: itemKey, done: state.done, done_on: state.done_on }).select().then(function(r){
+        if (r.error){
+          showToast("Couldn't save that — check your internet and try again.");
+          return;
+        }
+        state.id = r.data[0].id;
+      });
+    };
+    state._p = state._p ? state._p.then(run, run) : run();
+    return state._p;
   }
 
   function renderCountdown(){
@@ -1510,6 +2079,464 @@
     document.getElementById(id).addEventListener("keydown", function(event){
       if (event.key === "Enter") document.getElementById("btnLogin").click();
     });
+  });
+
+  /* ============================================================
+     FAREWELL PREP PLAN — static reference content
+     ============================================================ */
+  function planListCard(title, items){
+    var html = '<div class="plan-card"><h3>' + title + '</h3><ul>';
+    items.forEach(function(it){ html += '<li>' + it + '</li>'; });
+    return html + '</ul></div>';
+  }
+
+  function renderFarewell(){
+    var el = document.getElementById("farewellBody");
+    var html = "";
+
+    html += '<div class="content-intro"><b>Goal:</b> build glutes, legs, back &amp; shoulders while losing stomach fat — for 23 September, and beyond.<br>' +
+      'Strength first, then a 10-min low-impact cardio finisher (stairmaster / incline treadmill / bike). Eat simply, high protein, no strict counting.</div>';
+
+    html += '<div class="content-h2">🥗 Eating plan</div>';
+    html += '<div class="plan-card"><h3>The basic pattern (every day)</h3>' +
+      '<p><span class="meal-label">Breakfast:</span> eggs + coffee (your usual)</p>' +
+      '<p><span class="meal-label">Lunch:</span> Woolies soup + protein add-on</p>' +
+      '<p><span class="meal-label">Dinner:</span> whatever your parents make — load up on protein and veg, go lighter on starch</p>' +
+      '<p><span class="meal-label">Snacks:</span> pick 1–2 from the snack list if hungry</p></div>';
+
+    html += planListCard("Breakfast options (rotate)", [
+      "2–3 eggs (scrambled/fried/boiled) + coffee",
+      "2 eggs + 1 slice low-GI or seed bread + coffee",
+      "2 eggs + 1/4 avo (when on special) + coffee",
+      "Oats made with milk + a spoon of peanut butter + coffee (good on gym mornings)"
+    ]);
+    html += planListCard("Lunch add-ons (with the soup)", [
+      "2 boiled eggs",
+      "Small tin of tuna or pilchards",
+      "Handful of biltong or droëwors",
+      "Leftover chicken",
+      "Plain yoghurt + a small handful of nuts"
+    ]);
+    html += planListCard("Snack options", [
+      "Plain yoghurt",
+      "Small handful of almonds or peanuts",
+      "Fruit (apple, banana, naartjie)",
+      "Boiled egg",
+      "Rice cakes with peanut butter (pre/post gym)"
+    ]);
+    html += '<div class="plan-tip"><strong>Keep it simple:</strong> no need to weigh food or count calories exactly. Every meal has a clear protein source, starch stays moderate, and meals don\'t get skipped. Consistency over the weeks beats any single "perfect" day.</div>';
+    html += '<div class="plan-tip"><strong>Budget note:</strong> eggs, tinned tuna/pilchards, oats, plain yoghurt, peanut butter and frozen veg are some of the cheapest protein sources at any SA supermarket — this plan leans on those on purpose.</div>';
+
+    html += '<div class="content-h2">🏋️ Gym program</div>';
+    html += '<div class="content-intro" style="margin-bottom:12px;">Tick each workout off in the <b>🎮 Quest Game</b> as you do it — every session earns XP.</div>';
+    gymWeekOrder.forEach(function(wd){
+      var w = gymPlan[wd];
+      html += '<div class="plan-card"><h3>' + w.day + ' — ' + w.name + '</h3>';
+      if (w.rest){
+        html += '<p>' + w.note + '</p>';
+      } else {
+        html += '<table class="plan-table"><tr><th>Exercise</th><th>Sets</th><th>Reps</th></tr>';
+        w.ex.forEach(function(r){ html += '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>'; });
+        html += '</table><div class="cardio-line">Finish: ' + w.cardio + '</div>';
+      }
+      html += '</div>';
+    });
+    html += '<div class="plan-tip"><strong>Progression:</strong> once an exercise feels easy at the top of the rep range, add a little weight next session — that\'s what builds glutes/legs/back/shoulders over time.</div>';
+    html += '<div class="plan-tip"><strong>Around exams:</strong> if a day gets missed for prelim study, don\'t double up to "catch up" — just pick back up on the next scheduled day.</div>';
+
+    el.innerHTML = html;
+  }
+
+  /* ============================================================
+     BIBLE JOURNEY — stories (ticks persist), feelings, tips
+     ============================================================ */
+  var bibleFilter = "All";
+  var bibleShowDeeper = false;
+
+  function renderBibleFilters(){
+    var wrap = document.getElementById("bibleFilters");
+    wrap.innerHTML = "";
+    var parts = [];
+    bibleStories.forEach(function(s){ if (parts.indexOf(s.part) === -1) parts.push(s.part); });
+    ["All"].concat(parts).forEach(function(p){
+      var chip = document.createElement("div");
+      chip.className = "filter-chip" + (p === bibleFilter ? " active" : "");
+      chip.textContent = p;
+      chip.addEventListener("click", function(){
+        bibleFilter = p;
+        renderBibleFilters();
+        renderBibleStories();
+      });
+      wrap.appendChild(chip);
+    });
+  }
+
+  function renderBibleStories(){
+    var list = document.getElementById("bibleStoryList");
+    list.innerHTML = "";
+    var lastPart = "";
+    bibleStories.forEach(function(s, idx){
+      if (bibleFilter !== "All" && s.part !== bibleFilter) return;
+      if (!bibleShowDeeper && s.depth !== "core") return;
+
+      var color = biblePartColors[s.part] || "#b76e56";
+      if (s.part !== lastPart){
+        var h = document.createElement("div");
+        h.className = "part-heading";
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        dot.style.background = color;
+        h.appendChild(dot);
+        h.appendChild(document.createTextNode(s.part));
+        list.appendChild(h);
+        lastPart = s.part;
+      }
+
+      var key = "bible:" + idx;
+      var done = isChecked(key);
+
+      var card = document.createElement("div");
+      card.className = "story-card" + (done ? " done" : "");
+      card.style.setProperty("--part-color", color);
+
+      var check = document.createElement("div");
+      check.className = "story-check" + (done ? " on" : "");
+      check.textContent = "✓";
+
+      var main = document.createElement("div");
+      main.className = "story-main";
+
+      var titleEl = document.createElement("div");
+      titleEl.className = "story-title";
+      var num = document.createElement("span");
+      num.className = "num";
+      num.textContent = (idx + 1) + ".";
+      titleEl.appendChild(num);
+      titleEl.appendChild(document.createTextNode(s.title));
+      if (s.depth === "deeper"){
+        var tag = document.createElement("span");
+        tag.className = "deeper-tag";
+        tag.textContent = "deeper";
+        titleEl.appendChild(tag);
+      }
+
+      var sum = document.createElement("div");
+      sum.className = "story-summary";
+      sum.textContent = s.summary;
+
+      var refs = document.createElement("div");
+      refs.className = "story-refs";
+      refs.innerHTML = "<b>Story:</b> " + s.story + " &nbsp;|&nbsp; <b>Verse:</b> " + s.verse;
+
+      main.appendChild(titleEl);
+      main.appendChild(sum);
+      main.appendChild(refs);
+
+      check.addEventListener("click", function(){
+        var nowDone = !isChecked(key);
+        writeCheckoff(key, nowDone);
+        card.classList.toggle("done", nowDone);
+        check.classList.toggle("on", nowDone);
+        updateBibleProgress();
+      });
+
+      card.appendChild(check);
+      card.appendChild(main);
+      list.appendChild(card);
+    });
+  }
+
+  function updateBibleProgress(){
+    var total = 0, done = 0;
+    bibleStories.forEach(function(s, idx){
+      if (!bibleShowDeeper && s.depth !== "core") return;
+      total++;
+      if (isChecked("bible:" + idx)) done++;
+    });
+    var pct = total ? Math.round(done / total * 100) : 0;
+    document.getElementById("bibleProgressFill").style.width = pct + "%";
+    document.getElementById("bibleProgressLabel").textContent =
+      done + " of " + total + " stories read" + (bibleShowDeeper ? " (core + deeper)" : " (core journey)");
+  }
+
+  function renderFeelings(filterText){
+    var list = document.getElementById("feelList");
+    list.innerHTML = "";
+    var ft = (filterText || "").toLowerCase();
+    bibleEmotions.filter(function(e){ return e.feel.toLowerCase().indexOf(ft) !== -1; }).forEach(function(e){
+      var card = document.createElement("div");
+      card.className = "feel-card";
+
+      var head = document.createElement("div");
+      head.className = "feel-head";
+      var feelText = document.createElement("span");
+      feelText.textContent = e.feel;
+      var plus = document.createElement("span");
+      plus.className = "plus";
+      plus.textContent = "+";
+      head.appendChild(feelText);
+      head.appendChild(plus);
+
+      var body = document.createElement("div");
+      body.className = "feel-body";
+      e.verses.forEach(function(v){
+        var line = document.createElement("div");
+        line.className = "feel-verse";
+        var ref = document.createElement("span");
+        ref.className = "feel-ref";
+        ref.textContent = v.ref;
+        line.appendChild(ref);
+        line.appendChild(document.createTextNode(" — " + v.text));
+        body.appendChild(line);
+      });
+
+      head.addEventListener("click", function(){
+        var open = body.classList.toggle("open");
+        plus.textContent = open ? "–" : "+";
+      });
+
+      card.appendChild(head);
+      card.appendChild(body);
+      list.appendChild(card);
+    });
+  }
+
+  var tipsRendered = false;
+  function renderTips(){
+    if (tipsRendered) return;
+    var list = document.getElementById("tipsList");
+    list.innerHTML = "";
+    bibleTips.forEach(function(t){
+      var card = document.createElement("div");
+      card.className = "tips-card";
+      var h = document.createElement("h3");
+      h.textContent = t.h;
+      var p = document.createElement("div");
+      p.textContent = t.t;
+      card.appendChild(h);
+      card.appendChild(p);
+      list.appendChild(card);
+    });
+    tipsRendered = true;
+  }
+
+  function openBible(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenGame").classList.add("hidden");
+    document.getElementById("screenBible").classList.remove("hidden");
+    document.getElementById("depthToggle").checked = bibleShowDeeper;
+    renderBibleFilters();
+    renderBibleStories();
+    updateBibleProgress();
+    renderFeelings("");
+    renderTips();
+  }
+
+  document.querySelectorAll("#screenBible .subtab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll("#screenBible .subtab").forEach(function(t){ t.classList.remove("active"); });
+      document.querySelectorAll("#screenBible .subpane").forEach(function(p){ p.classList.remove("active"); });
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.pane).classList.add("active");
+    });
+  });
+
+  document.getElementById("depthToggle").addEventListener("change", function(e){
+    bibleShowDeeper = e.target.checked;
+    renderBibleStories();
+    updateBibleProgress();
+  });
+
+  document.getElementById("feelSearch").addEventListener("input", function(e){
+    renderFeelings(e.target.value);
+  });
+
+  /* ============================================================
+     QUEST GAME — XP, levels, streak, tick-off quests
+     ============================================================ */
+  var gameWeekStart = null;
+
+  function computeStreak(dates){
+    var cur = startOfToday();
+    if (!dates[isoOfDate(cur)]){
+      // Yesterday still counts — a streak doesn't break until a full day is missed.
+      cur.setDate(cur.getDate() - 1);
+      if (!dates[isoOfDate(cur)]) return 0;
+    }
+    var streak = 0;
+    while (dates[isoOfDate(cur)]){
+      streak++;
+      cur.setDate(cur.getDate() - 1);
+    }
+    return streak;
+  }
+
+  function gameStats(){
+    var xp = 0, workouts = 0, stories = 0, habits = 0;
+    var dates = {};
+    for (var key in checkoffMap){
+      if (!checkoffMap.hasOwnProperty(key)) continue;
+      var s = checkoffMap[key];
+      if (!s.done) continue;
+      if (key.indexOf("gym:") === 0){ xp += XP_WORKOUT; workouts++; }
+      else if (key.indexOf("bible:") === 0){ xp += XP_STORY; stories++; }
+      else if (key.indexOf("habit:") === 0){ xp += XP_HABIT; habits++; }
+      if (s.done_on) dates[s.done_on] = true;
+    }
+    return {
+      xp: xp, workouts: workouts, stories: stories, habits: habits,
+      level: Math.floor(xp / XP_PER_LEVEL) + 1,
+      streak: computeStreak(dates)
+    };
+  }
+
+  function buildQuestRow(key, title, sub, xp, color){
+    var done = isChecked(key);
+    var row = document.createElement("div");
+    row.className = "quest-row" + (done ? " done" : "");
+    if (color) row.style.setProperty("--quest-color", color);
+
+    var check = document.createElement("div");
+    check.className = "quest-check" + (done ? " on" : "");
+    check.textContent = "✓";
+
+    var main = document.createElement("div");
+    main.className = "quest-main";
+    var t = document.createElement("div");
+    t.className = "quest-title";
+    t.textContent = title;
+    main.appendChild(t);
+    if (sub){
+      var sb = document.createElement("div");
+      sb.className = "quest-sub";
+      sb.textContent = sub;
+      main.appendChild(sb);
+    }
+
+    var xpEl = document.createElement("div");
+    xpEl.className = "quest-xp";
+    xpEl.textContent = "+" + xp + " XP";
+
+    check.addEventListener("click", function(){
+      writeCheckoff(key, !isChecked(key));
+      renderGame();
+    });
+
+    row.appendChild(check);
+    row.appendChild(main);
+    row.appendChild(xpEl);
+    return row;
+  }
+
+  function renderGame(){
+    var st = gameStats();
+
+    document.getElementById("gameLevel").textContent = "Level " + st.level;
+    document.getElementById("gameStreak").textContent = "🔥 " + st.streak + (st.streak === 1 ? " day" : " days");
+    var into = st.xp % XP_PER_LEVEL;
+    document.getElementById("gameXpSub").textContent =
+      st.xp + " XP · " + (XP_PER_LEVEL - into) + " XP to level " + (st.level + 1);
+    document.getElementById("gameXpFill").style.width = Math.round(into / XP_PER_LEVEL * 100) + "%";
+
+    var badgeWrap = document.getElementById("gameBadges");
+    badgeWrap.innerHTML = "";
+    gameBadgeDefs.forEach(function(b){
+      var on = b.test(st);
+      var el = document.createElement("div");
+      el.className = "badge" + (on ? " on" : "");
+      var em = document.createElement("div");
+      em.className = "b-emoji";
+      em.textContent = b.emoji;
+      var lab = document.createElement("div");
+      lab.className = "b-label";
+      lab.textContent = b.label;
+      el.appendChild(em);
+      el.appendChild(lab);
+      badgeWrap.appendChild(el);
+    });
+
+    var today = startOfToday();
+    var todayIso = isoOfDate(today);
+    var todayWrap = document.getElementById("gameToday");
+    todayWrap.innerHTML = "";
+    var todayWorkout = gymPlan[today.getDay()];
+    todayWrap.appendChild(buildQuestRow(
+      "gym:" + todayIso,
+      (todayWorkout.rest ? "Recovery — " : "") + todayWorkout.name,
+      todayWorkout.rest ? "Rest day · optional block walk" : ("Today's workout · finish " + todayWorkout.cardio),
+      XP_WORKOUT, "#b76e56"
+    ));
+    dailyHabits.forEach(function(h){
+      todayWrap.appendChild(buildQuestRow(
+        "habit:" + todayIso + ":" + h.slug,
+        h.emoji + " " + h.title, h.sub, XP_HABIT, "#7f9866"
+      ));
+    });
+
+    if (!gameWeekStart) gameWeekStart = getMonday(today);
+    var ws = new Date(gameWeekStart);
+    var we = new Date(ws);
+    we.setDate(ws.getDate() + 6);
+    document.getElementById("gameWeekRange").textContent = formatDate(ws) + " – " + formatDate(we);
+
+    var weekWrap = document.getElementById("gameWeek");
+    weekWrap.innerHTML = "";
+    for (var i = 0; i < 7; i++){
+      var d = new Date(ws);
+      d.setDate(ws.getDate() + i);
+      var w = gymPlan[d.getDay()];
+      var label = dayLabels[d.getDay()] + " " + d.getDate() + " " + monthShortNames[d.getMonth()] + " — " + w.name;
+      var sub = w.rest ? "Rest / block walk" : ("Finish: " + w.cardio);
+      weekWrap.appendChild(buildQuestRow("gym:" + isoOfDate(d), label, sub, XP_WORKOUT, "#b76e56"));
+    }
+
+    var coreTotal = 0;
+    bibleStories.forEach(function(s){ if (s.depth === "core") coreTotal++; });
+    var pct = coreTotal ? Math.round(Math.min(st.stories, coreTotal) / coreTotal * 100) : 0;
+    var bibleWrap = document.getElementById("gameBible");
+    bibleWrap.innerHTML = "";
+    var card = document.createElement("div");
+    card.className = "game-summary-card";
+    card.innerHTML =
+      '<div class="progress-top"><span><b>' + st.stories + '</b> stories read · +' + (st.stories * XP_STORY) + ' XP</span><span>tap to open →</span></div>' +
+      '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>';
+    card.addEventListener("click", function(){ openBible(); });
+    bibleWrap.appendChild(card);
+  }
+
+  function openGame(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenGame").classList.remove("hidden");
+    gameWeekStart = getMonday(startOfToday());
+    renderGame();
+  }
+
+  /* ---------- New-section navigation ---------- */
+  function backToDashboard(fromId){
+    document.getElementById(fromId).classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+  }
+
+  document.getElementById("btnOpenGame").addEventListener("click", openGame);
+  document.getElementById("btnOpenFarewell").addEventListener("click", function(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenFarewell").classList.remove("hidden");
+    renderFarewell();
+  });
+  document.getElementById("btnOpenBible").addEventListener("click", openBible);
+  document.getElementById("btnBackFarewell").addEventListener("click", function(){ backToDashboard("screenFarewell"); });
+  document.getElementById("btnBackBible").addEventListener("click", function(){ backToDashboard("screenBible"); });
+  document.getElementById("btnBackGame").addEventListener("click", function(){ backToDashboard("screenGame"); });
+
+  document.getElementById("btnGamePrevWeek").addEventListener("click", function(){
+    if (!gameWeekStart) gameWeekStart = getMonday(startOfToday());
+    gameWeekStart.setDate(gameWeekStart.getDate() - 7);
+    renderGame();
+  });
+  document.getElementById("btnGameNextWeek").addEventListener("click", function(){
+    if (!gameWeekStart) gameWeekStart = getMonday(startOfToday());
+    gameWeekStart.setDate(gameWeekStart.getDate() + 7);
+    renderGame();
   });
 
   sbClient.auth.getSession().then(function(sessionResult){
