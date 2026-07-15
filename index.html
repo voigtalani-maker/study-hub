@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Study Hub</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23c97b63%22/></svg>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Study Hub">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+  :root{
+    --bg:#faf7f2;
+    --surface:#ffffff;
+    --surface-2:#f3ede3;
+    --text:#37302a;
+    --text-soft:#8a7d70;
+    --border:#e6ded2;
+    --primary:#b76e56;
+    --primary-dark:#9c5a44;
+    --shadow:0 1px 2px rgba(55,48,42,0.04), 0 8px 24px rgba(55,48,42,0.06);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(480px 320px at 8% -5%, rgba(217,143,111,0.16), transparent),
+      radial-gradient(420px 300px at 100% 0%, rgba(127,152,102,0.14), transparent),
+      radial-gradient(500px 360px at 50% 100%, rgba(154,132,173,0.12), transparent),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--text);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.45;
+  }
+  #app{padding:20px 16px 60px;}
+
+  /* ---------- Login screen ---------- */
+  .login-wrap{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:24px;
+    text-align:center;
+  }
+  .login-mark{
+    width:56px;height:56px;border-radius:16px;
+    background:linear-gradient(135deg,var(--primary),#cc9f4c);
+    margin:0 auto 20px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;
+    box-shadow:var(--shadow);
+  }
+  .login-title{font-size:23px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;}
+  .login-sub{color:var(--text-soft);margin:0 0 32px;font-size:14.5px;}
+  .card{
+    background:var(--surface);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+    padding:24px;
+  }
+  .login-card{width:100%;max-width:360px;text-align:left;}
+  label{display:block;font-size:12.5px;font-weight:600;color:var(--text-soft);margin:16px 0 6px;text-transform:uppercase;letter-spacing:.03em;}
+  label:first-of-type{margin-top:0;}
+  input[type=text],input[type=password],input[type=number],input[type=date],textarea{
+    width:100%;
+    padding:12px 14px;
+    border-radius:9px;
+    border:1.5px solid var(--border);
+    background:var(--bg);
+    font-size:15px;
+    color:var(--text);
+    font-family:inherit;
+  }
+  textarea{resize:vertical;min-height:60px;}
+  input:focus,textarea:focus{outline:none;border-color:var(--primary);}
+  .btn{
+    width:100%;
+    padding:13px;
+    border-radius:9px;
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    margin-top:22px;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .btn:hover{background:var(--primary-dark);}
+  .btn:active{background:var(--primary-dark);}
+  .btn-small{width:auto;padding:9px 18px;margin-top:12px;font-size:13.5px;}
+  .login-note{font-size:12.5px;color:var(--text-soft);margin-top:20px;line-height:1.6;max-width:360px;}
+  .login-note strong{color:var(--text);}
+  .field-error{color:#a8452e;font-size:13px;margin-top:8px;}
+
+  /* ---------- Dashboard ---------- */
+  .dashboard-shell{max-width:1180px;margin:0 auto;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .greeting{font-size:20px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .logout{font-size:13px;color:var(--text-soft);background:none;border:1px solid var(--border);border-radius:8px;cursor:pointer;padding:7px 14px;font-family:inherit;}
+  .logout:hover{border-color:var(--text-soft);color:var(--text);}
+
+  .preview-banner{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 16px;
+    font-size:13px;
+    color:var(--text-soft);
+    margin-bottom:24px;
+    line-height:1.55;
+  }
+  .preview-banner strong{color:var(--text);}
+
+  .section-title{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft);margin:30px 0 12px;}
+  .section-title:first-of-type{margin-top:0;}
+
+  .dashboard-grid{display:block;}
+  .col-main{min-width:0;}
+  .col-side{min-width:0;}
+
+  .countdown-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:var(--shadow);
+  }
+  .countdown-num{font-size:44px;font-weight:700;line-height:1;color:var(--primary);letter-spacing:-0.02em;}
+  .countdown-label{font-size:13.5px;color:var(--text-soft);margin-top:6px;}
+  .countdown-next{font-size:13px;color:var(--text);margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+
+  .chip-row{display:flex;gap:8px;overflow-x:auto;padding:14px 2px 4px;-webkit-overflow-scrolling:touch;}
+  .chip{
+    flex:0 0 auto;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:12px;
+    white-space:nowrap;
+  }
+  .chip .chip-date{display:block;font-weight:600;color:var(--text);}
+  .chip .chip-sub{display:block;color:var(--text-soft);margin-top:2px;}
+
+  .subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .subject-card{
+    background:var(--subject-tint, var(--surface));
+    border:1px solid var(--border);
+    border-left:4px solid var(--subject-color, var(--primary));
+    border-radius:12px;
+    padding:14px 15px;
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .subject-card:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(55,48,42,0.08), 0 12px 28px rgba(55,48,42,0.09);}
+  .subject-card:active{transform:translateY(0) scale(0.98);}
+  .subject-icon{font-size:22px;margin-bottom:8px;display:block;}
+  .subject-name{font-weight:600;font-size:14.5px;color:var(--text);}
+  .subject-meta{font-size:12px;margin-top:4px;color:var(--text-soft);}
+
+  .empty-card{
+    background:var(--surface);
+    border:1px dashed var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+    text-align:center;
+    color:var(--text-soft);
+    font-size:13.5px;
+    line-height:1.6;
+  }
+
+  .streak-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    height:100%;
+  }
+  .streak-num{font-size:19px;font-weight:700;}
+  .streak-sub{font-size:13px;color:var(--text-soft);margin-top:2px;}
+
+  /* ---------- Study schedule ---------- */
+  .schedule-nav-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    cursor:pointer;
+    margin-bottom:8px;
+  }
+  .schedule-nav-card:hover{border-color:var(--text-soft);}
+  .schedule-nav-title{font-weight:600;font-size:15px;}
+  .schedule-nav-sub{font-size:12.5px;color:var(--text-soft);margin-top:3px;}
+  .schedule-nav-arrow{font-size:20px;color:var(--primary);}
+
+  .schedule-shell{max-width:820px;margin:0 auto;}
+  .schedule-back{font-size:13px;color:var(--text-soft);background:none;border:1px solid var(--border);border-radius:8px;cursor:pointer;padding:7px 14px;font-family:inherit;margin-bottom:18px;}
+  .schedule-back:hover{border-color:var(--text-soft);color:var(--text);}
+  .schedule-title{font-size:20px;font-weight:600;margin:0 0 4px;}
+  .schedule-sub{font-size:13.5px;color:var(--text-soft);margin:0 0 20px;}
+
+  .day-row{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:4px solid var(--subject-color, var(--primary));
+    border-radius:10px;
+    margin-bottom:8px;
+    overflow:hidden;
+  }
+  .day-row.is-today{border-left-width:6px;box-shadow:var(--shadow);}
+  .day-row.is-exam{border-left-color:var(--primary);}
+  .day-row-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 14px;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .day-row-date{font-weight:600;font-size:13.5px;flex:0 0 auto;min-width:64px;}
+  .day-row-summary{font-size:12.5px;color:var(--text-soft);flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .day-row.is-exam .day-row-summary{color:var(--primary);font-weight:600;}
+  .day-row-hours{font-size:11.5px;color:var(--text-soft);flex:0 0 auto;background:var(--surface-2);border-radius:8px;padding:2px 8px;}
+  .day-row-chevron{font-size:11px;color:var(--text-soft);flex:0 0 auto;transition:transform .15s ease;}
+  .day-row.is-open .day-row-chevron{transform:rotate(90deg);}
+  .day-row-body{display:none;padding:0 14px 16px;}
+  .day-row.is-open .day-row-body{display:block;}
+  .day-row-plan{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px;padding-top:2px;border-top:1px solid var(--border);padding-top:12px;}
+  .block-list{margin-bottom:10px;}
+  .block-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+  .block-row input[type=time]{width:auto;flex:0 0 88px;padding:8px 6px;font-size:13px;}
+  .block-row input[type=text]{flex:1 1 auto;padding:8px 10px;font-size:13px;}
+  .block-row input[type=checkbox]{flex:0 0 auto;width:18px;height:18px;accent-color:var(--primary);}
+  .block-delete{flex:0 0 auto;background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;padding:4px 8px;line-height:1;}
+  .block-delete:hover{color:#a8452e;}
+  .block-arrow{flex:0 0 auto;color:var(--text-soft);font-size:12px;}
+  .block-empty-hint{font-size:12px;color:var(--text-soft);margin-bottom:10px;}
+
+  /* ---------- Day editing ---------- */
+  .day-edit-label{display:block;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-soft);margin:0 0 6px;padding-top:12px;border-top:1px solid var(--border);}
+  .day-plan-input{width:100%;min-height:52px;padding:9px 11px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;color:var(--text);font-family:inherit;resize:vertical;}
+  .day-plan-input:focus{outline:none;border-color:var(--primary);}
+  .day-edit-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 14px;}
+  .day-subject-select{padding:7px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:12.5px;color:var(--text);font-family:inherit;}
+  .day-exam-toggle{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text);text-transform:none;letter-spacing:normal;font-weight:500;margin:0;cursor:pointer;}
+  .day-exam-toggle input{width:17px;height:17px;accent-color:var(--primary);}
+  .day-delete-btn{margin-left:auto;background:none;border:1px solid var(--border);color:var(--text-soft);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;}
+  .day-delete-btn:hover{border-color:#a8452e;color:#a8452e;}
+
+  /* ---------- Add a day ---------- */
+  .add-day-form{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px;margin-bottom:16px;}
+  .add-day-form label{margin-top:12px;}
+  .add-day-form label:first-child{margin-top:0;}
+  .add-day-form textarea{min-height:52px;}
+  .add-day-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px;}
+  .add-day-row select{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;color:var(--text);font-family:inherit;}
+  .add-day-actions{display:flex;align-items:center;gap:10px;margin-top:16px;}
+  .add-day-actions .btn{width:auto;margin-top:0;}
+  .add-day-actions .schedule-back{margin-bottom:0;}
+
+  .schedule-notice{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 16px;
+    font-size:13px;
+    color:var(--text-soft);
+    margin-bottom:18px;
+  }
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:26px;
+    transform:translateX(-50%);
+    background:var(--text);
+    color:#fff;
+    padding:11px 18px;
+    border-radius:10px;
+    font-size:13px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.2);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease, bottom .25s ease;
+    max-width:88vw;
+    text-align:center;
+    z-index:50;
+  }
+  .toast.show{opacity:1;bottom:36px;}
+
+  /* ---------- Weekly view ---------- */
+  .week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:10px;}
+  .week-nav-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 16px;cursor:pointer;font-size:15px;color:var(--text);font-family:inherit;}
+  .week-nav-btn:hover{border-color:var(--text-soft);}
+  .week-range{font-weight:600;font-size:14.5px;text-align:center;flex:1 1 auto;}
+
+  .week-day-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:4px solid var(--subject-color, var(--primary));
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  .week-day-card:hover{border-color:var(--text-soft);}
+  .week-day-card.is-today{border-left-width:6px;box-shadow:var(--shadow);}
+  .week-day-main{min-width:0;}
+  .week-day-date{font-weight:600;font-size:13.5px;}
+  .week-day-plan{font-size:12px;color:var(--text-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;}
+  .week-day-plan.is-exam{color:var(--primary);font-weight:600;}
+  .week-day-hours{flex:0 0 auto;font-size:11.5px;background:var(--surface-2);border-radius:8px;padding:4px 10px;color:var(--text);white-space:nowrap;}
+
+  @media (min-width:700px){
+    .subjects-grid{grid-template-columns:repeat(3,1fr);}
+  }
+
+  @media (min-width:960px){
+    #app{padding:40px 32px 60px;}
+    .subjects-grid{grid-template-columns:repeat(4,1fr);}
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:2.4fr 1fr;
+      gap:32px;
+      align-items:start;
+    }
+    .section-title:first-of-type{margin-top:0;}
+  }
+
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ LOGIN SCREEN ============ -->
+  <div id="screenLogin" class="login-wrap">
+    <div class="login-mark">🌿</div>
+    <h1 class="login-title">Study Hub</h1>
+    <p class="login-sub">Your matric year, all in one place.</p>
+
+    <div class="card login-card">
+      <label for="inputUsername">Username</label>
+      <input type="text" id="inputUsername" placeholder="e.g. alani" autocomplete="username">
+
+      <label for="inputPassword">Password</label>
+      <input type="password" id="inputPassword" placeholder="Pick a password" autocomplete="current-password">
+
+      <div id="loginError" class="field-error hidden"></div>
+
+      <button class="btn" id="btnLogin">Log in / Create my hub</button>
+    </div>
+
+    <p class="login-note">
+      First time here? Just type a username and a password you'll remember — that becomes your account, no email needed. From now on, this hub remembers you on any device you log into.
+    </p>
+  </div>
+
+  <!-- ============ DASHBOARD SCREEN ============ -->
+  <div id="screenDashboard" class="hidden dashboard-shell">
+    <div class="topbar">
+      <p class="greeting" id="greetingText">Hi!</p>
+      <button class="logout" id="btnLogout">Log out</button>
+    </div>
+
+    <div class="preview-banner">
+      🚧 <strong>Almost there.</strong> Your subjects and exam dates are now saved for real. Homework quests and streaks aren't wired up to save yet — that's next session.
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenSchedule">
+      <div>
+        <div class="schedule-nav-title">📖 Your study schedule</div>
+        <div class="schedule-nav-sub">Day-by-day plan from your teacher, with a place to log your real hours</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenWeek">
+      <div>
+        <div class="schedule-nav-title">🗓️ Weekly view</div>
+        <div class="schedule-nav-sub">See a whole week at a glance, with hours logged per day</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="col-main">
+        <div class="section-title">📅 Record exam countdown</div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="countdownNum">–</div>
+          <div class="countdown-label" id="countdownLabel">days until your first paper</div>
+          <div class="countdown-next" id="countdownNext"></div>
+        </div>
+        <div class="chip-row" id="examChipRow"></div>
+
+        <div class="section-title">📚 Your subjects</div>
+        <div class="subjects-grid" id="subjectsGrid"></div>
+
+        <div class="section-title">✅ Homework quests</div>
+        <div class="empty-card">
+          🗒️ No quests yet. Next session we'll wire up adding homework here and ticking it off for XP.
+        </div>
+      </div>
+
+      <div class="col-side">
+        <div class="section-title">🔥 Study streak</div>
+        <div class="streak-card">
+          <div style="font-size:30px;">🔥</div>
+          <div>
+            <div class="streak-num">0 day streak</div>
+            <div class="streak-sub">Log your first study session once this is wired up next session!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STUDY SCHEDULE SCREEN ============ -->
+  <div id="screenSchedule" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackToDashboard">← Back to dashboard</button>
+    <h1 class="schedule-title">Study Schedule</h1>
+    <p class="schedule-sub">21 July – 15 September 2026 · tap a day to see the plan and log your real hours.</p>
+    <div class="schedule-notice hidden" id="scheduleNotice"></div>
+
+    <button class="btn btn-small" id="btnAddDay" type="button" style="margin-bottom:14px;">＋ Add a day</button>
+    <div class="add-day-form hidden" id="addDayForm">
+      <label for="addDayDate">Date</label>
+      <input type="date" id="addDayDate">
+      <label for="addDayText">Plan</label>
+      <textarea id="addDayText" placeholder="What's the plan for this day?"></textarea>
+      <div class="add-day-row">
+        <select id="addDaySubject" title="Colour accent"></select>
+        <label class="day-exam-toggle"><input type="checkbox" id="addDayExam"><span>Exam day</span></label>
+      </div>
+      <div class="add-day-actions">
+        <button class="btn btn-small" id="btnSaveNewDay" type="button">Save day</button>
+        <button class="schedule-back" id="btnCancelNewDay" type="button">Cancel</button>
+      </div>
+    </div>
+
+    <div id="scheduleList"></div>
+  </div>
+
+  <!-- ============ WEEKLY VIEW SCREEN ============ -->
+  <div id="screenWeek" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackToDashboardFromWeek">← Back to dashboard</button>
+    <h1 class="schedule-title">Weekly View</h1>
+    <p class="schedule-sub">Tap any day to open it in your full schedule.</p>
+    <div class="week-nav">
+      <button class="week-nav-btn" id="btnPrevWeek">←</button>
+      <div class="week-range" id="weekRangeLabel"></div>
+      <button class="week-nav-btn" id="btnNextWeek">→</button>
+    </div>
+    <div id="weekList"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toastBox"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SUPABASE_URL = "https://hontxqtggrvxybamqrnh.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvbnR4cXRnZ3J2eHliYW1xcm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3OTM1NDksImV4cCI6MjA5OTM2OTU0OX0.SI8_oREKFwwS0GN95dpYkb1QeKiwFwZj00xJvsTp5Bw";
+  var sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  var EMAIL_SUFFIX = "@her-hub.local";
+
+  /* ---------- Seed data: only ever written to the database once, the first time an account logs in ---------- */
+  var seedSubjects = [
+    { name:"Afrikaans",            colour:"#d98f6f", icon:"🗣️", position:1 },
+    { name:"Engels",               colour:"#8fa876", icon:"📖", position:2 },
+    { name:"Wiskunde",             colour:"#7b97ab", icon:"📐", position:3 },
+    { name:"LO",                   colour:"#cc9f4c", icon:"🏃", position:4 },
+    { name:"Fisiese Wetenskappe",  colour:"#9a84ad", icon:"🧪", position:5 },
+    { name:"Life Science",         colour:"#7f9866", icon:"🌱", position:6 },
+    { name:"IGO",                  colour:"#c98686", icon:"📏", position:7 },
+    { name:"CAT",                  colour:"#bd8f3f", icon:"💻", position:8 }
+  ];
+
+  /* Record exam timetable (CURRO IEB Prelim Gr 12 2026). Dates as {y,m,d}, m is 1-indexed on purpose. */
+  var seedExams = [
+    { subject:"Wiskunde",            series:"Record", paper:"Paper 1",          y:2026, m:8, d:17 },
+    { subject:"IGO",                 series:"Record", paper:"Paper 1",          y:2026, m:8, d:18 },
+    { subject:"CAT",                 series:"Record", paper:"Paper 1 (Practical)", y:2026, m:8, d:18 },
+    { subject:"Fisiese Wetenskappe", series:"Record", paper:"Paper 1 (Physics)", y:2026, m:8, d:24 },
+    { subject:"Engels",              series:"Record", paper:"Paper 1",          y:2026, m:8, d:25 },
+    { subject:"Life Science",        series:"Record", paper:"Paper 1",          y:2026, m:8, d:27 },
+    { subject:"Wiskunde",            series:"Record", paper:"Paper 2",          y:2026, m:8, d:31 },
+    { subject:"Afrikaans",           series:"Record", paper:"Paper 1",          y:2026, m:9, d:3 },
+    { subject:"Fisiese Wetenskappe", series:"Record", paper:"Paper 2 (Chemistry)", y:2026, m:9, d:7 },
+    { subject:"Engels",              series:"Record", paper:"Paper 2",          y:2026, m:9, d:8 },
+    { subject:"CAT",                 series:"Record", paper:"Paper 2 (Theory)", y:2026, m:9, d:10 },
+    { subject:"Afrikaans",           series:"Record", paper:"Paper 2",          y:2026, m:9, d:11 },
+    { subject:"Life Science",        series:"Record", paper:"Paper 2",          y:2026, m:9, d:14 },
+    { subject:"IGO",                 series:"Record", paper:"Paper 2",          y:2026, m:9, d:15 },
+    { subject:"Life Science",        series:"Record", paper:"PAT",              y:2026, m:9, d:16 }
+  ];
+
+  /* ---------- Live data, loaded from (or seeded into) the database after login ---------- */
+  var currentSubjects = [];
+  var currentExams = [];
+  var currentSchedule = [];
+
+  /* Study schedule SEED (from her teacher's plan, 21 Jul - 15 Sep 2026). Only ever written to the database once,
+     the first time an account loads after the schedule_days table exists. primarySubject is just a colour accent, m is 1-indexed. */
+  var seedSchedule = [
+    { y:2026, m:7, d:21, primarySubject:"IGO", exam:false, text:"IGO PAT: Navorsing en ontwerpbrief (6u)" },
+    { y:2026, m:7, d:22, primarySubject:"IGO", exam:false, text:"IGO PAT: Konsepsketse (6u)" },
+    { y:2026, m:7, d:23, primarySubject:"IGO", exam:false, text:"IGO PAT: Finale tekeninge — deel 1 (6u)" },
+    { y:2026, m:7, d:24, primarySubject:"IGO", exam:false, text:"IGO PAT: Finale tekeninge — deel 2 (6u)" },
+    { y:2026, m:7, d:25, primarySubject:"IGO", exam:false, text:"IGO PAT: Aanbieding en inhandig (4u) + LO: Ontwikkeling van die Self (2u)" },
+    { y:2026, m:7, d:26, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Algebra en Vergelykings (3u) + CAT: Lêerbestuur (3u)" },
+    { y:2026, m:7, d:27, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Patrone en Rye (3u) + CAT: Woordverwerking (3u)" },
+    { y:2026, m:7, d:28, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Finansies: groei/verval (3u) + CAT: Sigblad (3u)" },
+    { y:2026, m:7, d:29, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Funksies en Grafieke (3u) + CAT: Databasis (3u)" },
+    { y:2026, m:7, d:30, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Differensiaalrekene (3u) + CAT: HTML-webontwikkeling (3u)" },
+    { y:2026, m:7, d:31, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Waarskynlikheid (3u) + CAT: Gemengde oefening (3u — CAT V1 klaar)" },
+    { y:2026, m:8, d:1,  primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Volle tydsbeperkte oefenvraestel (6u)" },
+    { y:2026, m:8, d:2,  primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Nasien + laaste hersiening (4u — WP1 klaar) + IGO: Siviel/Meganies Analities (2u)" },
+    { y:2026, m:8, d:3,  primarySubject:"IGO", exam:false, text:"IGO: Deurdringing/Ontwikkeling (3u) + LO: Sosiale/Omgewingsverantwoordelikheid (3u)" },
+    { y:2026, m:8, d:4,  primarySubject:"IGO", exam:false, text:"IGO: Perspektief/Isometriese Projeksie (3u — IGO klaar) + LO: Demokrasie/Menseregte + Loopbaan (3u — LO klaar)" },
+    { y:2026, m:8, d:5,  primarySubject:"Afrikaans", exam:false, text:"Afrikaans: Leesbegrip en Taal (3u) + Engels: Leesbegrip en Taal (3u)" },
+    { y:2026, m:8, d:6,  primarySubject:"Afrikaans", exam:false, text:"Afrikaans: Opsomming + Poësie (3u) + Engels: Opsomming + Poësie (3u)" },
+    { y:2026, m:8, d:7,  primarySubject:"Afrikaans", exam:false, text:"Afrikaans: Transaksionele skryfwerk (2u — klaar) + Engels: Transaksionele skryfwerk (2u — klaar) + Fisiese Wetenskappe: Kinematika intro (2u)" },
+    { y:2026, m:8, d:8,  primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Kinematika — grafiek-gradiënt → vergelyking (6u)" },
+    { y:2026, m:8, d:9,  primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Newton se Wette — multi-stap probleme (6u)" },
+    { y:2026, m:8, d:10, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Newton verder + wrywing op skuinsvlakke (3u) + Chemie: Elektrolitiese vs galvaniese selle (3u)" },
+    { y:2026, m:8, d:11, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Momentum, Impuls, Werk-Energie-Drywing (3u) + Chemie: Elektrolitiese selle — ou vraestelvrae (3u)" },
+    { y:2026, m:8, d:12, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Elektrodinamika — generator-rigtingreël (3u) + Chemie: Eksotermies/endotermies energiediagramme (3u)" },
+    { y:2026, m:8, d:13, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Gravitasie/Elektriese Velde + Elektriese Stroombane (3u) + Chemie: Kwantitatiewe Chemie (3u)" },
+    { y:2026, m:8, d:14, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Fotone en Elektrone (3u) + Wiskunde: Statistiek (3u)" },
+    { y:2026, m:8, d:15, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Gemengde hersiening — al die swak areas (3u) + Wiskunde: Analitiese Meetkunde (3u)" },
+    { y:2026, m:8, d:16, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Getimede oefenvraestel + nasien (3u) + Life Science: Chemiese Koördinasie en Voortplanting (3u)" },
+    { y:2026, m:8, d:17, primarySubject:"Wiskunde", exam:true,  text:"EKSAMEN: Wiskunde Vraestel 1" },
+    { y:2026, m:8, d:18, primarySubject:"CAT", exam:true,  text:"EKSAMEN: CAT V1 (Prakties) + IGO Vraestel 1" },
+    { y:2026, m:8, d:19, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Fisika: Laaste getimede vraestel (3u — Fisika klaar) + Life Science: DNS/Genetika/Genetiese Ingenieurswese (3u)" },
+    { y:2026, m:8, d:20, primarySubject:"Life Science", exam:false, text:"Life Science: Evolusie + Bevolkings-/Gemeenskapsekologie (6u)" },
+    { y:2026, m:8, d:21, primarySubject:"Life Science", exam:false, text:"Life Science: Gemengde hersiening, ou vraestelvrae (3u — LW1 klaar) + Chemie: Chemiese Bindings (3u)" },
+    { y:2026, m:8, d:22, primarySubject:"Life Science", exam:false, text:"Life Science: Laaste ligte hersiening (3u) + Wiskunde: Trigonometrie (3u)" },
+    { y:2026, m:8, d:23, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Chemie: Chemiese Ewewig (3u) + Wiskunde: Euklidiese Meetkunde en Meting (3u)" },
+    { y:2026, m:8, d:24, primarySubject:"Fisiese Wetenskappe", exam:true,  text:"EKSAMEN: Fisiese Wetenskappe Vraestel 1 (Fisika)" },
+    { y:2026, m:8, d:25, primarySubject:"Engels", exam:true,  text:"EKSAMEN: Engels Vraestel 1" },
+    { y:2026, m:8, d:26, primarySubject:"Fisiese Wetenskappe", exam:false, text:"Chemie: Sure en Basisse (3u) + Wiskunde: Gemengde hersiening / tydsbeperkte afdeling (3u)" },
+    { y:2026, m:8, d:27, primarySubject:"Life Science", exam:true,  text:"EKSAMEN: Life Science Vraestel 1" },
+    { y:2026, m:8, d:28, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Trigonometrie — verdere oefening (4u) + Chemie: Elektrochemie herhaal (2u)" },
+    { y:2026, m:8, d:29, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Volle tydsbeperkte oefenvraestel (4u) + Chemie: Organiese Chemie (2u)" },
+    { y:2026, m:8, d:30, primarySubject:"Wiskunde", exam:false, text:"Wiskunde: Nasien + laaste hersiening (5u — WP2 klaar) + Chemie: Gemengde hersiening (1u)" },
+    { y:2026, m:8, d:31, primarySubject:"Wiskunde", exam:true,  text:"EKSAMEN: Wiskunde Vraestel 2" },
+    { y:2026, m:9, d:1,  primarySubject:"Fisiese Wetenskappe", exam:false, text:"Chemie: Kwantitatiewe Chemie — mol-berekeninge (3u) + CAT: Stelseltegnologie (3u)" },
+    { y:2026, m:9, d:2,  primarySubject:"Fisiese Wetenskappe", exam:false, text:"Chemie: Energieverandering & Tempo — exo/endo herhaal (3u) + CAT: Internet en Netwerktegnologie (3u)" },
+    { y:2026, m:9, d:3,  primarySubject:"Afrikaans", exam:true,  text:"EKSAMEN: Afrikaans Vraestel 1" },
+    { y:2026, m:9, d:4,  primarySubject:"Fisiese Wetenskappe", exam:false, text:"Chemie: Sure en Basisse (3u) + CAT: Gemengde oefening (3u)" },
+    { y:2026, m:9, d:5,  primarySubject:"Fisiese Wetenskappe", exam:false, text:"Chemie: Getimede volle vraestel (3u — Chemie klaar) + Life Science: Chemiese Koördinasie en Voortplanting (3u)" },
+    { y:2026, m:9, d:6,  primarySubject:"Life Science", exam:false, text:"Life Science: DNS/Genetika/Genetiese Ingenieurswese (3u) + CAT: Inligtingsbestuur (3u)" },
+    { y:2026, m:9, d:7,  primarySubject:"Fisiese Wetenskappe", exam:true,  text:"EKSAMEN: Fisiese Wetenskappe Vraestel 2 (Chemie)" },
+    { y:2026, m:9, d:8,  primarySubject:"CAT", exam:false, text:"CAT: Sosiale Implikasies (3u — CAT2 klaar) + Life Science: Evolusie (3u)" },
+    { y:2026, m:9, d:9,  primarySubject:"Life Science", exam:false, text:"Life Science: Bevolkings-/Gemeenskapsekologie (3u) + CAT: Volle tydsbeperkte oefenvraestel — nasien (3u)" },
+    { y:2026, m:9, d:10, primarySubject:"CAT", exam:true,  text:"EKSAMEN: CAT Vraestel 2 (Teorie)" },
+    { y:2026, m:9, d:11, primarySubject:"Afrikaans", exam:true,  text:"EKSAMEN: Afrikaans Vraestel 2" },
+    { y:2026, m:9, d:12, primarySubject:"Life Science", exam:false, text:"Life Science: Gemengde hersiening, ou vraestelvrae (3u — LW2 klaar) + oorblywende 3u: rus, of enige vak waaroor jy nog onseker voel" },
+    { y:2026, m:9, d:13, primarySubject:"LO", exam:false, text:"LO: Beredeneerde opstel-oefening vir GTA Deel B (3u — bonus, LO reeds klaar) + 3u rus/ligte oorsig" },
+    { y:2026, m:9, d:14, primarySubject:"Life Science", exam:true,  text:"EKSAMEN: Life Science Vraestel 2" },
+    { y:2026, m:9, d:15, primarySubject:"IGO", exam:true,  text:"EKSAMEN: LO — GTA Deel B" }
+  ];
+
+  function localDate(y, m, d){
+    // m is 1-indexed on purpose so the data above reads naturally; JS Date wants 0-indexed months.
+    return new Date(y, m - 1, d, 0, 0, 0, 0);
+  }
+  function pad2(n){
+    return n < 10 ? "0" + n : String(n);
+  }
+  function toIsoDate(y, m, d){
+    return y + "-" + pad2(m) + "-" + pad2(d);
+  }
+  function parseIsoDateLocal(isoString){
+    var parts = isoString.split("-");
+    return localDate(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+  }
+  function startOfToday(){
+    var now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  }
+  var monthShortNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function formatDate(dateObj){
+    return dateObj.getDate() + " " + monthShortNames[dateObj.getMonth()] + " " + dateObj.getFullYear();
+  }
+  function daysBetween(a, b){
+    var msPerDay = 24 * 60 * 60 * 1000;
+    return Math.round((b - a) / msPerDay);
+  }
+
+  var toastTimer = null;
+  function showToast(message){
+    var box = document.getElementById("toastBox");
+    box.textContent = message;
+    box.classList.add("show");
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function(){ box.classList.remove("show"); }, 2600);
+  }
+
+  function hexToTint(hex, alpha){
+    var r = parseInt(hex.substr(1, 2), 16);
+    var g = parseInt(hex.substr(3, 2), 16);
+    var b = parseInt(hex.substr(5, 2), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+  }
+
+  function usernameToEmail(username){
+    return username.trim().toLowerCase().replace(/\s+/g, "") + EMAIL_SUFFIX;
+  }
+  function emailToUsername(email){
+    return email.split("@")[0];
+  }
+  function capitalizeFirst(text){
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+  }
+
+  function subjectNameById(id){
+    for (var i = 0; i < currentSubjects.length; i++){
+      if (currentSubjects[i].id === id) return currentSubjects[i].name;
+    }
+    return "";
+  }
+
+  function ensureSubjectsSeeded(){
+    return sbClient.from("subjects").select("*").then(function(result){
+      if (result.error){
+        showToast("Couldn't load your subjects — check your internet and try again.");
+        return [];
+      }
+      if (result.data.length > 0){
+        return result.data;
+      }
+      var payload = seedSubjects.map(function(s){
+        return { name: s.name, colour: s.colour, position: s.position };
+      });
+      return sbClient.from("subjects").insert(payload).select().then(function(insertResult){
+        if (insertResult.error){
+          showToast("Couldn't set up your subjects — check your internet and try again.");
+          return [];
+        }
+        return insertResult.data;
+      });
+    });
+  }
+
+  function ensureExamsSeeded(subjectsRows){
+    return sbClient.from("exams").select("*").then(function(result){
+      if (result.error){
+        showToast("Couldn't load your exam dates — check your internet and try again.");
+        return [];
+      }
+      if (result.data.length > 0){
+        return result.data;
+      }
+      var idByName = {};
+      subjectsRows.forEach(function(row){ idByName[row.name] = row.id; });
+      var payload = seedExams
+        .filter(function(ex){ return idByName[ex.subject]; })
+        .map(function(ex){
+          return {
+            subject_id: idByName[ex.subject],
+            series: ex.series,
+            paper: ex.paper,
+            exam_date: toIsoDate(ex.y, ex.m, ex.d)
+          };
+        });
+      return sbClient.from("exams").insert(payload).select().then(function(insertResult){
+        if (insertResult.error){
+          showToast("Couldn't set up your exam dates — check your internet and try again.");
+          return [];
+        }
+        return insertResult.data;
+      });
+    });
+  }
+
+  function scheduleRowToEntry(row){
+    var parts = row.entry_date.split("-");
+    return {
+      id: row.id,
+      y: Number(parts[0]),
+      m: Number(parts[1]),
+      d: Number(parts[2]),
+      primarySubject: row.primary_subject || "",
+      exam: !!row.is_exam,
+      text: row.plan_text || ""
+    };
+  }
+
+  function sortSchedule(){
+    currentSchedule.sort(function(a, b){
+      return localDate(a.y, a.m, a.d) - localDate(b.y, b.m, b.d);
+    });
+  }
+
+  function ensureScheduleSeeded(){
+    return sbClient.from("schedule_days").select("*").then(function(result){
+      if (result.error){
+        showToast("Couldn't load your study schedule — check your internet and try again.");
+        return [];
+      }
+      if (result.data.length > 0){
+        return result.data;
+      }
+      var payload = seedSchedule.map(function(e){
+        return {
+          entry_date: toIsoDate(e.y, e.m, e.d),
+          plan_text: e.text,
+          primary_subject: e.primarySubject || null,
+          is_exam: !!e.exam
+        };
+      });
+      return sbClient.from("schedule_days").insert(payload).select().then(function(insertResult){
+        if (insertResult.error){
+          showToast("Couldn't set up your study schedule — check your internet and try again.");
+          return [];
+        }
+        return insertResult.data;
+      });
+    });
+  }
+
+  function updateScheduleDay(entry, fields){
+    return sbClient.from("schedule_days").update(fields).eq("id", entry.id).then(function(result){
+      if (result.error) showToast("Couldn't save that change — check your internet and try again.");
+    });
+  }
+
+  function deleteScheduleDay(entry){
+    return sbClient.from("schedule_days").delete().eq("id", entry.id).then(function(result){
+      if (result.error){
+        showToast("Couldn't delete that day — check your internet and try again.");
+        return false;
+      }
+      return true;
+    });
+  }
+
+  function loadDashboardData(){
+    return ensureSubjectsSeeded().then(function(subjectsRows){
+      currentSubjects = subjectsRows.slice().sort(function(a, b){ return a.position - b.position; });
+      return ensureExamsSeeded(subjectsRows).then(function(examsRows){
+        currentExams = examsRows;
+        return ensureScheduleSeeded().then(function(scheduleRows){
+          currentSchedule = scheduleRows.map(scheduleRowToEntry);
+          sortSchedule();
+        });
+      });
+    });
+  }
+
+  function renderCountdown(){
+    var today = startOfToday();
+    var upcoming = currentExams
+      .map(function(ex){ return { exam: ex, date: parseIsoDateLocal(ex.exam_date) }; })
+      .filter(function(item){ return item.date >= today; })
+      .sort(function(a, b){ return a.date - b.date; });
+
+    var numEl = document.getElementById("countdownNum");
+    var labelEl = document.getElementById("countdownLabel");
+    var nextEl = document.getElementById("countdownNext");
+
+    if (upcoming.length === 0){
+      numEl.textContent = "0";
+      labelEl.textContent = currentExams.length === 0 ? "No exam dates yet" : "You've written all your record exam papers!";
+      nextEl.textContent = "";
+    } else {
+      var first = upcoming[0];
+      numEl.textContent = String(daysBetween(today, first.date));
+      labelEl.textContent = "days until your first paper";
+      nextEl.textContent = subjectNameById(first.exam.subject_id) + " " + first.exam.paper + " · " + formatDate(first.date);
+    }
+
+    var row = document.getElementById("examChipRow");
+    row.innerHTML = "";
+    var sorted = currentExams
+      .map(function(ex){ return { exam: ex, date: parseIsoDateLocal(ex.exam_date) }; })
+      .sort(function(a, b){ return a.date - b.date; });
+
+    sorted.forEach(function(item){
+      var chip = document.createElement("div");
+      chip.className = "chip";
+      var dateLine = document.createElement("span");
+      dateLine.className = "chip-date";
+      dateLine.textContent = formatDate(item.date);
+      var subLine = document.createElement("span");
+      subLine.className = "chip-sub";
+      subLine.textContent = subjectNameById(item.exam.subject_id) + " · " + item.exam.paper;
+      chip.appendChild(dateLine);
+      chip.appendChild(subLine);
+      row.appendChild(chip);
+    });
+  }
+
+  function renderSubjects(){
+    var grid = document.getElementById("subjectsGrid");
+    grid.innerHTML = "";
+    var iconByName = {};
+    seedSubjects.forEach(function(s){ iconByName[s.name] = s.icon; });
+
+    currentSubjects.forEach(function(subject){
+      var card = document.createElement("div");
+      card.className = "subject-card";
+      card.style.setProperty("--subject-color", subject.colour);
+      card.style.setProperty("--subject-tint", hexToTint(subject.colour, 0.16));
+      var iconEl = document.createElement("span");
+      iconEl.className = "subject-icon";
+      iconEl.textContent = iconByName[subject.name] || "📘";
+      var nameEl = document.createElement("div");
+      nameEl.className = "subject-name";
+      nameEl.textContent = subject.name;
+      var metaEl = document.createElement("div");
+      metaEl.className = "subject-meta";
+      metaEl.textContent = "Tap for summaries soon";
+      card.appendChild(iconEl);
+      card.appendChild(nameEl);
+      card.appendChild(metaEl);
+      card.addEventListener("click", function(){
+        showToast(subject.name + " page is coming in a future session!");
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  var dayLabels = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+  function timeToMinutes(hhmm){
+    var parts = hhmm.split(":");
+    return Number(parts[0]) * 60 + Number(parts[1]);
+  }
+  function minutesToTimeValue(totalMinutes){
+    var h = Math.floor(totalMinutes / 60) % 24;
+    var m = totalMinutes % 60;
+    return pad2(h) + ":" + pad2(m);
+  }
+
+  function loadBlocksForDate(dateIso){
+    return sbClient.from("study_log").select("*").eq("studied_on", dateIso).is("subject_id", null).order("start_time", { ascending: true, nullsFirst: false }).then(function(result){
+      if (result.error){
+        showToast("Couldn't load your saved blocks — check your internet and try again.");
+        return [];
+      }
+      return result.data;
+    });
+  }
+
+  function saveBlock(block, dateIso){
+    var payload = {
+      studied_on: dateIso,
+      subject_id: null,
+      start_time: block.start_time,
+      minutes: block.minutes,
+      note: block.note,
+      done: block.done
+    };
+    if (block.id){
+      return sbClient.from("study_log").update(payload).eq("id", block.id).then(function(result){
+        if (result.error) showToast("Couldn't save that — check your internet and try again.");
+      });
+    }
+    if (block._pending){
+      return block._pending.then(function(){
+        return saveBlock(block, dateIso);
+      });
+    }
+    block._pending = sbClient.from("study_log").insert(payload).select().then(function(result){
+      block._pending = null;
+      if (result.error){
+        showToast("Couldn't save that — check your internet and try again.");
+        return;
+      }
+      block.id = result.data[0].id;
+      // If the block was deleted while its insert was still in flight, remove the
+      // just-created row now that we finally know its id (see deleteBlock).
+      if (block._deleted) deleteBlock(block);
+    });
+    return block._pending;
+  }
+
+  function deleteBlock(block){
+    // Insert still in flight: we don't have an id yet. Flag it so saveBlock deletes
+    // the row the moment the insert resolves — otherwise the row would be orphaned.
+    if (block._pending){
+      block._deleted = true;
+      return;
+    }
+    if (!block.id) return;
+    sbClient.from("study_log").delete().eq("id", block.id).then(function(result){
+      if (result.error) showToast("Couldn't delete that — check your internet and try again.");
+    });
+  }
+
+  function buildBlockRow(block, dateIso){
+    var row = document.createElement("div");
+    row.className = "block-row";
+
+    var startInput = document.createElement("input");
+    startInput.type = "time";
+    startInput.value = block.start_time ? block.start_time.substring(0, 5) : "";
+
+    var arrow = document.createElement("span");
+    arrow.className = "block-arrow";
+    arrow.textContent = "–";
+
+    var endInput = document.createElement("input");
+    endInput.type = "time";
+    endInput.value = (block.start_time && block.minutes) ? minutesToTimeValue(timeToMinutes(block.start_time.substring(0, 5)) + block.minutes) : "";
+
+    var noteInput = document.createElement("input");
+    noteInput.type = "text";
+    noteInput.placeholder = "What are you doing?";
+    noteInput.value = block.note || "";
+
+    var doneInput = document.createElement("input");
+    doneInput.type = "checkbox";
+    doneInput.checked = !!block.done;
+    doneInput.title = "Done";
+
+    var deleteBtn = document.createElement("button");
+    deleteBtn.className = "block-delete";
+    deleteBtn.textContent = "×";
+    deleteBtn.type = "button";
+
+    function persistChanges(){
+      block.start_time = startInput.value || null;
+      block.done = doneInput.checked;
+      block.note = noteInput.value;
+      if (startInput.value && endInput.value){
+        var diff = timeToMinutes(endInput.value) - timeToMinutes(startInput.value);
+        // End earlier than start means the block runs past midnight — add a full day.
+        // minutesToTimeValue already wraps hours mod 24, so reload reconstructs correctly.
+        if (diff < 0) diff += 24 * 60;
+        block.minutes = diff;
+      } else {
+        block.minutes = 0;
+      }
+      saveBlock(block, dateIso);
+    }
+
+    [startInput, endInput, noteInput, doneInput].forEach(function(el){
+      el.addEventListener("change", persistChanges);
+    });
+
+    deleteBtn.addEventListener("click", function(){
+      deleteBlock(block);
+      row.remove();
+    });
+
+    row.appendChild(startInput);
+    row.appendChild(arrow);
+    row.appendChild(endInput);
+    row.appendChild(noteInput);
+    row.appendChild(doneInput);
+    row.appendChild(deleteBtn);
+    return row;
+  }
+
+  function buildDayRow(entry, dateObj, isToday){
+    var dateIso = toIsoDate(entry.y, entry.m, entry.d);
+    var row = document.createElement("div");
+
+    var head = document.createElement("div");
+    head.className = "day-row-head";
+
+    var dateEl = document.createElement("div");
+    dateEl.className = "day-row-date";
+    dateEl.textContent = dayLabels[dateObj.getDay()] + " " + dateObj.getDate() + " " + monthShortNames[dateObj.getMonth()];
+
+    var summaryEl = document.createElement("div");
+    summaryEl.className = "day-row-summary";
+
+    var chevronEl = document.createElement("div");
+    chevronEl.className = "day-row-chevron";
+    chevronEl.textContent = "▸";
+
+    head.appendChild(dateEl);
+    head.appendChild(summaryEl);
+    head.appendChild(chevronEl);
+    row.appendChild(head);
+
+    var body = document.createElement("div");
+    body.className = "day-row-body";
+    row.appendChild(body);
+
+    /* ----- editable plan text ----- */
+    var planLabel = document.createElement("label");
+    planLabel.className = "day-edit-label";
+    planLabel.textContent = "Plan for this day";
+    var planInput = document.createElement("textarea");
+    planInput.className = "day-plan-input";
+    planInput.value = entry.text;
+    body.appendChild(planLabel);
+    body.appendChild(planInput);
+
+    /* ----- controls: subject colour, exam toggle, delete ----- */
+    var controls = document.createElement("div");
+    controls.className = "day-edit-controls";
+
+    var subjectSelect = document.createElement("select");
+    subjectSelect.className = "day-subject-select";
+    var noneOpt = document.createElement("option");
+    noneOpt.value = "";
+    noneOpt.textContent = "No colour";
+    subjectSelect.appendChild(noneOpt);
+    currentSubjects.forEach(function(s){
+      var opt = document.createElement("option");
+      opt.value = s.name;
+      opt.textContent = s.name;
+      if (s.name === entry.primarySubject) opt.selected = true;
+      subjectSelect.appendChild(opt);
+    });
+
+    var examLabel = document.createElement("label");
+    examLabel.className = "day-exam-toggle";
+    var examCheck = document.createElement("input");
+    examCheck.type = "checkbox";
+    examCheck.checked = !!entry.exam;
+    var examText = document.createElement("span");
+    examText.textContent = "Exam day";
+    examLabel.appendChild(examCheck);
+    examLabel.appendChild(examText);
+
+    var deleteDayBtn = document.createElement("button");
+    deleteDayBtn.type = "button";
+    deleteDayBtn.className = "day-delete-btn";
+    deleteDayBtn.textContent = "Delete day";
+
+    controls.appendChild(subjectSelect);
+    controls.appendChild(examLabel);
+    controls.appendChild(deleteDayBtn);
+    body.appendChild(controls);
+
+    /* ----- hour-by-hour block planner (hidden on exam days) ----- */
+    var blockSection = document.createElement("div");
+    blockSection.className = "block-section";
+
+    var blockList = document.createElement("div");
+    blockList.className = "block-list";
+
+    var emptyHint = document.createElement("div");
+    emptyHint.className = "block-empty-hint hidden";
+    emptyHint.textContent = "No blocks yet — add your own below.";
+
+    var addBtn = document.createElement("button");
+    addBtn.className = "btn btn-small";
+    addBtn.type = "button";
+    addBtn.textContent = "+ Add block";
+
+    blockSection.appendChild(blockList);
+    blockSection.appendChild(emptyHint);
+    blockSection.appendChild(addBtn);
+    body.appendChild(blockSection);
+
+    addBtn.addEventListener("click", function(){
+      emptyHint.classList.add("hidden");
+      var block = { id: null, start_time: null, minutes: 0, note: "", done: false };
+      blockList.appendChild(buildBlockRow(block, dateIso));
+    });
+
+    var blocksLoaded = false;
+    function loadBlocksOnce(){
+      if (blocksLoaded) return;
+      blocksLoaded = true;
+      loadBlocksForDate(dateIso).then(function(blocks){
+        if (blocks.length === 0){
+          emptyHint.classList.remove("hidden");
+        } else {
+          emptyHint.classList.add("hidden");
+          blocks.forEach(function(block){
+            blockList.appendChild(buildBlockRow(block, dateIso));
+          });
+        }
+      });
+    }
+
+    /* ----- appearance helpers, driven by the live `entry` object ----- */
+    function applySubjectColour(){
+      var subjectMeta = currentSubjects.filter(function(s){ return s.name === entry.primarySubject; })[0];
+      if (subjectMeta) row.style.setProperty("--subject-color", subjectMeta.colour);
+      else row.style.removeProperty("--subject-color");
+    }
+    function applyExamState(){
+      if (entry.exam){
+        row.classList.add("is-exam");
+        blockSection.classList.add("hidden");
+      } else {
+        row.classList.remove("is-exam");
+        blockSection.classList.remove("hidden");
+      }
+    }
+
+    row.className = "day-row" + (isToday ? " is-today" : "");
+    summaryEl.textContent = entry.text || "(no plan yet)";
+    applySubjectColour();
+    applyExamState();
+
+    /* ----- edits ----- */
+    planInput.addEventListener("change", function(){
+      entry.text = planInput.value;
+      summaryEl.textContent = entry.text || "(no plan yet)";
+      updateScheduleDay(entry, { plan_text: entry.text });
+    });
+    subjectSelect.addEventListener("change", function(){
+      entry.primarySubject = subjectSelect.value;
+      applySubjectColour();
+      updateScheduleDay(entry, { primary_subject: entry.primarySubject || null });
+    });
+    examCheck.addEventListener("change", function(){
+      entry.exam = examCheck.checked;
+      applyExamState();
+      if (!entry.exam && row.classList.contains("is-open")) loadBlocksOnce();
+      updateScheduleDay(entry, { is_exam: entry.exam });
+    });
+    deleteDayBtn.addEventListener("click", function(){
+      if (!window.confirm("Delete this day from your schedule?")) return;
+      deleteScheduleDay(entry).then(function(ok){
+        if (ok === false) return;
+        var idx = currentSchedule.indexOf(entry);
+        if (idx > -1) currentSchedule.splice(idx, 1);
+        row.remove();
+      });
+    });
+
+    head.addEventListener("click", function(){
+      var isOpen = row.classList.toggle("is-open");
+      if (isOpen && !entry.exam) loadBlocksOnce();
+    });
+
+    return row;
+  }
+
+  function renderSchedule(targetDateIso){
+    var list = document.getElementById("scheduleList");
+    var notice = document.getElementById("scheduleNotice");
+    var subEl = document.querySelector("#screenSchedule .schedule-sub");
+    list.innerHTML = "";
+
+    sortSchedule();
+    var today = startOfToday();
+
+    if (currentSchedule.length === 0){
+      if (subEl) subEl.textContent = "Add your first day to start building your schedule.";
+      notice.classList.add("hidden");
+      return;
+    }
+
+    var firstEntry = currentSchedule[0];
+    var lastEntry = currentSchedule[currentSchedule.length - 1];
+    var firstDate = localDate(firstEntry.y, firstEntry.m, firstEntry.d);
+    var lastDate = localDate(lastEntry.y, lastEntry.m, lastEntry.d);
+
+    if (subEl){
+      subEl.textContent = formatDate(firstDate) + " – " + formatDate(lastDate) + " · tap a day to edit it and log your hours.";
+    }
+
+    if (today < firstDate){
+      notice.textContent = "Your schedule starts " + formatDate(firstDate) + " — " + daysBetween(today, firstDate) + " days from now.";
+      notice.classList.remove("hidden");
+    } else if (today > lastDate){
+      notice.textContent = "You've reached the end of your schedule — amazing work getting through it!";
+      notice.classList.remove("hidden");
+    } else {
+      notice.classList.add("hidden");
+    }
+
+    var todayRow = null;
+    var targetRow = null;
+    currentSchedule.forEach(function(entry){
+      var dateObj = localDate(entry.y, entry.m, entry.d);
+      var dateIso = toIsoDate(entry.y, entry.m, entry.d);
+      var isToday = dateObj.getTime() === today.getTime();
+      var row = buildDayRow(entry, dateObj, isToday);
+      if (isToday) todayRow = row;
+      if (targetDateIso && dateIso === targetDateIso) targetRow = row;
+      list.appendChild(row);
+    });
+
+    var rowToOpen = targetDateIso ? targetRow : todayRow;
+    if (rowToOpen){
+      rowToOpen.querySelector(".day-row-head").click();
+      rowToOpen.scrollIntoView({ block: "center" });
+    }
+  }
+
+  function scheduleEntryForDate(dateObj){
+    for (var i = 0; i < currentSchedule.length; i++){
+      var e = currentSchedule[i];
+      if (e.y === dateObj.getFullYear() && e.m === (dateObj.getMonth() + 1) && e.d === dateObj.getDate()) return e;
+    }
+    return null;
+  }
+
+  function getMonday(dateObj){
+    var day = dateObj.getDay();
+    var diff = day === 0 ? -6 : 1 - day;
+    var monday = new Date(dateObj);
+    monday.setDate(dateObj.getDate() + diff);
+    return monday;
+  }
+
+  var currentWeekStart = null;
+
+  function renderWeek(){
+    var today = startOfToday();
+    if (!currentWeekStart) currentWeekStart = getMonday(today);
+
+    // Snapshot the week we're rendering. prev/next mutate currentWeekStart in place,
+    // so we must not read it again inside the async .then (would mix weeks / render stale).
+    var weekStart = new Date(currentWeekStart);
+    var weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    document.getElementById("weekRangeLabel").textContent = formatDate(weekStart) + " – " + formatDate(weekEnd);
+
+    var startIso = toIsoDate(weekStart.getFullYear(), weekStart.getMonth() + 1, weekStart.getDate());
+    var endIso = toIsoDate(weekEnd.getFullYear(), weekEnd.getMonth() + 1, weekEnd.getDate());
+
+    sbClient.from("study_log").select("studied_on, minutes").is("subject_id", null).gte("studied_on", startIso).lte("studied_on", endIso).then(function(result){
+      // Dropped if the user navigated to a different week before this response arrived.
+      if (weekStart.getTime() !== currentWeekStart.getTime()) return;
+
+      var minutesByDate = {};
+      if (result.error){
+        showToast("Couldn't load your logged hours — check your internet and try again.");
+      } else {
+        result.data.forEach(function(row){
+          minutesByDate[row.studied_on] = (minutesByDate[row.studied_on] || 0) + row.minutes;
+        });
+      }
+
+      var list = document.getElementById("weekList");
+      list.innerHTML = "";
+
+      for (var i = 0; i < 7; i++){
+        var d = new Date(weekStart);
+        d.setDate(weekStart.getDate() + i);
+        var entry = scheduleEntryForDate(d);
+        var dateIso = toIsoDate(d.getFullYear(), d.getMonth() + 1, d.getDate());
+        var isExam = !!(entry && entry.exam);
+        var isToday = d.getTime() === today.getTime();
+
+        var card = document.createElement("div");
+        card.className = "week-day-card" + (isExam ? " is-exam" : "") + (isToday ? " is-today" : "");
+        if (entry && !entry.exam){
+          var subjMeta = currentSubjects.filter(function(s){ return s.name === entry.primarySubject; })[0];
+          if (subjMeta) card.style.setProperty("--subject-color", subjMeta.colour);
+        }
+
+        var mainEl = document.createElement("div");
+        mainEl.className = "week-day-main";
+        var dateLabel = document.createElement("div");
+        dateLabel.className = "week-day-date";
+        dateLabel.textContent = dayLabels[d.getDay()] + " " + d.getDate() + " " + monthShortNames[d.getMonth()];
+        var planLabel = document.createElement("div");
+        planLabel.className = "week-day-plan" + (isExam ? " is-exam" : "");
+        planLabel.textContent = entry ? entry.text : "No schedule entry";
+        mainEl.appendChild(dateLabel);
+        mainEl.appendChild(planLabel);
+
+        var hoursBadge = document.createElement("div");
+        hoursBadge.className = "week-day-hours";
+        var mins = minutesByDate[dateIso] || 0;
+        hoursBadge.textContent = mins > 0 ? (Math.round(mins / 6) / 10) + "h logged" : "—";
+
+        card.appendChild(mainEl);
+        card.appendChild(hoursBadge);
+
+        card.addEventListener("click", (function(targetIso){
+          return function(){
+            document.getElementById("screenWeek").classList.add("hidden");
+            document.getElementById("screenSchedule").classList.remove("hidden");
+            renderSchedule(targetIso);
+          };
+        })(dateIso));
+
+        list.appendChild(card);
+      }
+    });
+  }
+
+  function showDashboardScreen(username){
+    document.getElementById("screenLogin").classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+    document.getElementById("greetingText").textContent = "Hi, " + username + " 👋";
+    renderCountdown();
+    renderSubjects();
+  }
+
+  function goToLogin(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenLogin").classList.remove("hidden");
+    document.getElementById("inputPassword").value = "";
+    var loginBtn = document.getElementById("btnLogin");
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Log in / Create my hub";
+  }
+
+  function enterDashboard(username){
+    return loadDashboardData().then(function(){
+      showDashboardScreen(username);
+    }).catch(function(){
+      // Any unexpected failure in the load chain must never strand the user on a
+      // disabled "Logging in…" button — restore it and tell them something went wrong.
+      var loginBtn = document.getElementById("btnLogin");
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Log in / Create my hub";
+      showToast("Something went wrong loading your hub — check your internet and try again.");
+    });
+  }
+
+  document.getElementById("btnLogin").addEventListener("click", function(){
+    var errorBox = document.getElementById("loginError");
+    var loginBtn = document.getElementById("btnLogin");
+    var username = document.getElementById("inputUsername").value.trim();
+    var password = document.getElementById("inputPassword").value;
+
+    if (!username || !password){
+      errorBox.textContent = "Please fill in both a username and a password.";
+      errorBox.classList.remove("hidden");
+      return;
+    }
+    errorBox.classList.add("hidden");
+
+    var email = usernameToEmail(username);
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Logging in…";
+
+    function restoreLoginButton(){
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Log in / Create my hub";
+    }
+
+    sbClient.auth.signInWithPassword({ email: email, password: password }).then(function(signInResult){
+      if (!signInResult.error){
+        enterDashboard(username);
+        return;
+      }
+      // signInWithPassword returns the same "Invalid login credentials" error for BOTH
+      // a wrong password and a username that doesn't exist yet. Never sign up silently on
+      // a typo — confirm first, so a mistyped username can't fork a whole new empty account.
+      restoreLoginButton();
+      var proceed = window.confirm(
+        "We couldn't log you in as \"" + username + "\".\n\n" +
+        "Either the password is wrong, or no hub with this username exists yet.\n\n" +
+        "• If you already have a hub, click Cancel and check your spelling and password.\n" +
+        "• If this is your first time, click OK to create a new hub called \"" + username + "\"."
+      );
+      if (!proceed) return;
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Creating your hub…";
+      sbClient.auth.signUp({ email: email, password: password }).then(function(signUpResult){
+        if (signUpResult.error){
+          restoreLoginButton();
+          errorBox.textContent = "We couldn't create a new account. Check your internet and try again.";
+          errorBox.classList.remove("hidden");
+          return;
+        }
+        enterDashboard(username);
+      }).catch(function(){
+        restoreLoginButton();
+        errorBox.textContent = "We couldn't create a new account. Check your internet and try again.";
+        errorBox.classList.remove("hidden");
+      });
+    }).catch(function(){
+      restoreLoginButton();
+      errorBox.textContent = "Something went wrong logging in. Check your internet and try again.";
+      errorBox.classList.remove("hidden");
+    });
+  });
+
+  document.getElementById("btnLogout").addEventListener("click", function(){
+    sbClient.auth.signOut().then(function(){
+      goToLogin();
+    });
+  });
+
+  document.getElementById("btnOpenSchedule").addEventListener("click", function(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenSchedule").classList.remove("hidden");
+    renderSchedule();
+  });
+
+  document.getElementById("btnBackToDashboard").addEventListener("click", function(){
+    document.getElementById("screenSchedule").classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+  });
+
+  function populateAddDaySubjects(){
+    var sel = document.getElementById("addDaySubject");
+    sel.innerHTML = "";
+    var noneOpt = document.createElement("option");
+    noneOpt.value = "";
+    noneOpt.textContent = "No colour";
+    sel.appendChild(noneOpt);
+    currentSubjects.forEach(function(s){
+      var opt = document.createElement("option");
+      opt.value = s.name;
+      opt.textContent = s.name;
+      sel.appendChild(opt);
+    });
+  }
+
+  document.getElementById("btnAddDay").addEventListener("click", function(){
+    var form = document.getElementById("addDayForm");
+    if (form.classList.contains("hidden")){
+      populateAddDaySubjects();
+      document.getElementById("addDayDate").value = "";
+      document.getElementById("addDayText").value = "";
+      document.getElementById("addDayExam").checked = false;
+      form.classList.remove("hidden");
+    } else {
+      form.classList.add("hidden");
+    }
+  });
+
+  document.getElementById("btnCancelNewDay").addEventListener("click", function(){
+    document.getElementById("addDayForm").classList.add("hidden");
+  });
+
+  document.getElementById("btnSaveNewDay").addEventListener("click", function(){
+    var dateVal = document.getElementById("addDayDate").value;
+    var textVal = document.getElementById("addDayText").value.trim();
+    var subjectVal = document.getElementById("addDaySubject").value;
+    var examVal = document.getElementById("addDayExam").checked;
+
+    if (!dateVal){
+      showToast("Pick a date for the new day first.");
+      return;
+    }
+    var exists = currentSchedule.some(function(e){ return toIsoDate(e.y, e.m, e.d) === dateVal; });
+    if (exists){
+      showToast("You already have a day on that date — open it to edit.");
+      return;
+    }
+
+    var payload = {
+      entry_date: dateVal,
+      plan_text: textVal,
+      primary_subject: subjectVal || null,
+      is_exam: examVal
+    };
+    sbClient.from("schedule_days").insert(payload).select().then(function(result){
+      if (result.error){
+        showToast("Couldn't add that day — check your internet and try again.");
+        return;
+      }
+      currentSchedule.push(scheduleRowToEntry(result.data[0]));
+      document.getElementById("addDayForm").classList.add("hidden");
+      renderSchedule(dateVal);
+    });
+  });
+
+  document.getElementById("btnOpenWeek").addEventListener("click", function(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenWeek").classList.remove("hidden");
+    renderWeek();
+  });
+
+  document.getElementById("btnBackToDashboardFromWeek").addEventListener("click", function(){
+    document.getElementById("screenWeek").classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+  });
+
+  document.getElementById("btnPrevWeek").addEventListener("click", function(){
+    currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+    renderWeek();
+  });
+
+  document.getElementById("btnNextWeek").addEventListener("click", function(){
+    currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+    renderWeek();
+  });
+
+  ["inputUsername", "inputPassword"].forEach(function(id){
+    document.getElementById(id).addEventListener("keydown", function(event){
+      if (event.key === "Enter") document.getElementById("btnLogin").click();
+    });
+  });
+
+  sbClient.auth.getSession().then(function(sessionResult){
+    var session = sessionResult.data && sessionResult.data.session;
+    if (session && session.user && session.user.email){
+      // emailToUsername lower-cases the local-part; capitalise for display only so
+      // "Alani" doesn't greet as "alani" on refresh. Email derivation is untouched.
+      enterDashboard(capitalizeFirst(emailToUsername(session.user.email)));
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
