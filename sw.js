@@ -1,6 +1,6 @@
 /* Study Hub service worker — offline app shell, no push notifications.
    Bump CACHE when index.html or the shell changes so old copies are dropped. */
-const CACHE = 'studyhub-shell-v3';
+const CACHE = 'studyhub-shell-v4';
 const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
 
 // Cache the app shell on install. Local files must all cache for install to
@@ -38,9 +38,14 @@ self.addEventListener('fetch', function (event) {
 
   // Page loads: network-first so a redeploy is picked up, falling back to the
   // cached shell when offline.
+  // `cache:'no-cache'` forces a revalidation against the server instead of
+  // reading the browser's HTTP cache. GitHub Pages serves the shell with
+  // `max-age=600`, so a plain fetch() here could hand back a 10-minute-old
+  // page and a fresh deploy would look like it hadn't landed. Revalidating is
+  // cheap (a 304 when nothing changed) and makes redeploys show up at once.
   if (req.mode === 'navigate') {
     event.respondWith(
-      fetch(req).then(function (res) {
+      fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }).then(function (res) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put('./index.html', copy); });
         return res;
