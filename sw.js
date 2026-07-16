@@ -1,6 +1,6 @@
 /* Study Hub service worker — offline app shell, no push notifications.
    Bump CACHE when index.html or the shell changes so old copies are dropped. */
-const CACHE = 'studyhub-shell-v2';
+const CACHE = 'studyhub-shell-v3';
 const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
 
 // Cache the app shell on install. Local files must all cache for install to

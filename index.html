@@ -9,21 +9,22 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Hub">
-<meta name="theme-color" content="#b76e56">
+<meta name="theme-color" content="#5d9488">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon-180.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
   :root{
-    --bg:#faf7f2;
+    --bg:#f5f8f7;
     --surface:#ffffff;
-    --surface-2:#f3ede3;
-    --text:#37302a;
-    --text-soft:#8a7d70;
-    --border:#e6ded2;
-    --primary:#b76e56;
-    --primary-dark:#9c5a44;
-    --shadow:0 1px 2px rgba(55,48,42,0.04), 0 8px 24px rgba(55,48,42,0.06);
+    --surface-2:#eaf1ef;
+    --text:#2b3733;
+    --text-soft:#7a8b86;
+    --border:#dce8e4;
+    --primary:#5d9488;
+    --primary-dark:#4a7a70;
+    --accent:#7fa8cc;
+    --shadow:0 1px 2px rgba(43,55,51,0.04), 0 8px 24px rgba(43,55,51,0.06);
     --radius:14px;
   }
   *{box-sizing:border-box;}
@@ -31,9 +32,9 @@
     margin:0;
     font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
     background:
-      radial-gradient(480px 320px at 8% -5%, rgba(217,143,111,0.16), transparent),
-      radial-gradient(420px 300px at 100% 0%, rgba(127,152,102,0.14), transparent),
-      radial-gradient(500px 360px at 50% 100%, rgba(154,132,173,0.12), transparent),
+      radial-gradient(480px 320px at 8% -5%, rgba(127,168,204,0.16), transparent),
+      radial-gradient(420px 300px at 100% 0%, rgba(93,148,136,0.15), transparent),
+      radial-gradient(500px 360px at 50% 100%, rgba(127,168,204,0.10), transparent),
       var(--bg);
     background-attachment:fixed;
     color:var(--text);
@@ -55,7 +56,7 @@
   }
   .login-mark{
     width:56px;height:56px;border-radius:16px;
-    background:linear-gradient(135deg,var(--primary),#cc9f4c);
+    background:linear-gradient(135deg,var(--primary),var(--accent));
     margin:0 auto 20px;
     display:flex;align-items:center;justify-content:center;
     font-size:26px;
@@ -124,6 +125,71 @@
   }
   .preview-banner strong{color:var(--text);}
 
+  .hero-img{
+    border-radius:4px;
+    overflow:hidden;
+    margin:16px 0 6px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    line-height:0;
+  }
+  .hero-img svg{width:100%;height:140px;display:block;}
+  .screen-hero{
+    border-radius:4px;
+    overflow:hidden;
+    margin:2px 0 18px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    line-height:0;
+  }
+  .screen-hero svg{width:100%;height:84px;display:block;}
+  /* Real photos — themed banner per screen + a growing inspo strip */
+  .photo-hero{
+    overflow:hidden;margin:2px 0 16px;
+    border:1px solid var(--border);box-shadow:var(--shadow);line-height:0;
+    background:var(--surface-2);
+  }
+  /* Full photo, no crop — show the whole image at its natural proportions */
+  .photo-hero img{width:100%;height:auto;display:block;}
+  .inspo-row{
+    display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:0 0 6px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .inspo-row img{
+    height:200px;width:auto;max-width:300px;object-fit:contain;flex:0 0 auto;display:block;
+    border:1px solid var(--border);box-shadow:var(--shadow);background:var(--surface-2);
+  }
+  .inspo-hint{font-size:12px;color:var(--text-soft);margin:0 0 18px;}
+  .quote-card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:4px;
+    box-shadow:var(--shadow);
+    padding:26px 24px 22px;
+    margin:14px 0 20px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .quote-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--primary),var(--accent));
+  }
+  .quote-mark{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:46px;line-height:0;color:var(--accent);opacity:.55;
+    height:22px;margin-bottom:2px;
+  }
+  .quote-text{
+    font-family:Georgia,"Times New Roman",serif;
+    font-style:italic;font-size:19px;line-height:1.5;color:var(--text);
+    margin:0;transition:opacity .5s ease;letter-spacing:.01em;
+  }
+  .quote-author{
+    font-size:12px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--text-soft);margin:14px 0 0;transition:opacity .5s ease;
+  }
+  .quote-fade{opacity:0;}
   .section-title{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft);margin:30px 0 12px;}
   .section-title:first-of-type{margin-top:0;}
 
@@ -418,7 +484,7 @@
   .progress-top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px;color:var(--text-soft);}
   .progress-top b{color:var(--text);}
   .progress-track{background:var(--surface-2);border-radius:20px;height:12px;overflow:hidden;}
-  .progress-fill{background:linear-gradient(90deg,var(--primary),#cc9f4c);height:100%;width:0;border-radius:20px;transition:width .4s;}
+  .progress-fill{background:linear-gradient(90deg,var(--primary),var(--accent));height:100%;width:0;border-radius:20px;transition:width .4s;}
 
   /* ---------- Depth toggle switch ---------- */
   .depth-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:12px;box-shadow:var(--shadow);}
@@ -472,7 +538,7 @@
 
   /* ---------- Game ---------- */
   .game-hero{
-    background:linear-gradient(135deg,var(--primary),#cc9f4c);color:#fff;border-radius:16px;
+    background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-radius:16px;
     padding:20px;box-shadow:var(--shadow);margin-bottom:16px;
   }
   .game-hero-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;}
@@ -506,6 +572,12 @@
   .game-summary-card:hover{border-color:var(--text-soft);}
 
   .hidden{display:none !important;}
+
+  /* ---- Sharp-corner theme: every block, card, button, input & bar is squared ---- */
+  *{border-radius:0 !important;}
+  /* keep the only genuinely round bits: the toggle knob and the tiny part dots */
+  .switch .track::before{border-radius:50% !important;}
+  .part-heading .dot{border-radius:50% !important;}
 </style>
 </head>
 <body>
@@ -541,6 +613,49 @@
       <p class="greeting" id="greetingText">Hi!</p>
       <button class="logout" id="btnLogout">Log out</button>
     </div>
+
+    <div class="hero-img" aria-hidden="true">
+      <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" style="stop-color:var(--primary)"/>
+            <stop offset="1" style="stop-color:var(--accent)"/>
+          </linearGradient>
+          <radialGradient id="hglow" cx="0.82" cy="0.2" r="0.8">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.32"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="400" height="150" fill="url(#hg)"/>
+        <rect width="400" height="150" fill="url(#hglow)"/>
+        <circle cx="338" cy="42" r="48" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.2"/>
+        <circle cx="338" cy="42" r="30" fill="#ffffff" fill-opacity="0.10"/>
+        <line x1="36" y1="60" x2="66" y2="60" stroke="#ffffff" stroke-opacity="0.7" stroke-width="1"/>
+        <text x="34" y="92" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-size="31" fill="#ffffff">matric 2026</text>
+        <text x="36" y="113" font-family="'Segoe UI',Arial,sans-serif" font-size="10" letter-spacing="3" fill="#ffffff" fill-opacity="0.85">GRADE 12 &#183; CLASS OF 2026</text>
+      </svg>
+    </div>
+
+    <div class="quote-card" id="quoteCard">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote-text" id="quoteText"></p>
+      <p class="quote-author" id="quoteAuthor"></p>
+    </div>
+
+    <div class="section-title">✨ Your inspo</div>
+    <div class="inspo-row" id="inspoRow">
+      <img src="images/she-is-intelligent.jpg?v=2" alt="">
+      <img src="images/grades-a-plus.jpg?v=2" alt="">
+      <img src="images/eat-good-feel-good.jpg?v=2" alt="">
+      <img src="images/latte-plant.jpg?v=2" alt="">
+      <img src="images/make-him-priority.jpg?v=2" alt="">
+      <img src="images/gym-flatlay.jpg?v=2" alt="">
+      <img src="images/eat-healthy.jpg?v=2" alt="">
+      <img src="images/iced-latte-book.jpg?v=2" alt="">
+      <img src="images/sporty-rich.jpg?v=2" alt="">
+      <img src="images/yoghurt-bowl.jpg?v=2" alt="">
+    </div>
+    <p class="inspo-hint">Swipe → &nbsp;·&nbsp; more coming as you add them</p>
 
     <div class="preview-banner">
       🚧 <strong>Almost there.</strong> Your subjects and exam dates are now saved for real. Homework quests and streaks aren't wired up to save yet — that's next session.
@@ -621,6 +736,7 @@
   <!-- ============ STUDY SCHEDULE SCREEN ============ -->
   <div id="screenSchedule" class="hidden schedule-shell">
     <button class="schedule-back" id="btnBackToDashboard">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/focus.jpg?v=2" alt=""></div>
     <h1 class="schedule-title">Study Schedule</h1>
     <p class="schedule-sub">21 July – 15 September 2026 · tap a day to see the plan and log your real hours.</p>
     <div class="schedule-notice hidden" id="scheduleNotice"></div>
@@ -647,6 +763,7 @@
   <!-- ============ WEEKLY VIEW SCREEN ============ -->
   <div id="screenWeek" class="hidden schedule-shell">
     <button class="schedule-back" id="btnBackToDashboardFromWeek">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/discipline-desk.jpg?v=2" alt=""></div>
     <h1 class="schedule-title">Weekly View</h1>
     <p class="schedule-sub">Tap any day to open it in your full schedule.</p>
     <div class="week-nav">
@@ -660,6 +777,7 @@
   <!-- ============ FAREWELL PREP PLAN SCREEN ============ -->
   <div id="screenFarewell" class="hidden schedule-shell">
     <button class="schedule-back" id="btnBackFarewell">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/gym-1-percent.jpg?v=2" alt=""></div>
     <h1 class="schedule-title">Farewell Prep Plan 💪</h1>
     <p class="schedule-sub">Glutes, legs, back &amp; shoulders — strong for 23 September, and beyond.</p>
     <div id="farewellBody"></div>
@@ -668,6 +786,7 @@
   <!-- ============ BIBLE JOURNEY SCREEN ============ -->
   <div id="screenBible" class="hidden schedule-shell">
     <button class="schedule-back" id="btnBackBible">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/god-within-her.jpg?v=2" alt=""></div>
     <h1 class="schedule-title">My Bible Journey 🕊️</h1>
     <p class="schedule-sub">Read the story like a child. Then sit with the verse.</p>
 
@@ -703,6 +822,7 @@
   <!-- ============ QUEST GAME SCREEN ============ -->
   <div id="screenGame" class="hidden schedule-shell">
     <button class="schedule-back" id="btnBackGame">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/doing-this-for-me.jpg?v=2" alt=""></div>
     <h1 class="schedule-title">Quest Game 🎮</h1>
     <p class="schedule-sub">Tick off everything you actually did. Earn XP, level up, keep your streak alive.</p>
 
@@ -1887,6 +2007,72 @@
     document.getElementById("greetingText").textContent = "Hi, " + username + " 👋";
     renderCountdown();
     renderSubjects();
+    startHourlyQuote();
+  }
+
+  // ---------- Hourly quote ----------
+  // One quote per hour of the day, deterministic so it's the same on every device
+  // that hour, and it re-checks every 30s so it swaps itself on the hour while the
+  // hub stays open — no reload needed.
+  var quoteList = [
+    { t:"You don't have to do it all today. Just the next right thing.", a:"Reminder" },
+    { t:"Small steps every day add up to big things.", a:"Reminder" },
+    { t:"Discipline is choosing what you want most over what you want now.", a:"Reminder" },
+    { t:"She believed she could, so she did.", a:"R.S. Grey" },
+    { t:"Done is better than perfect.", a:"Reminder" },
+    { t:"Study now so future-you can rest easy.", a:"Reminder" },
+    { t:"Your only limit is you. Be brave and fearless.", a:"Reminder" },
+    { t:"Progress, not perfection.", a:"Reminder" },
+    { t:"A little progress each day adds up to big results.", a:"Reminder" },
+    { t:"You are capable of amazing things.", a:"Reminder" },
+    { t:"Focus on the step in front of you, not the whole staircase.", a:"Reminder" },
+    { t:"Rest is productive too. Breathe, then begin again.", a:"Reminder" },
+    { t:"Believe you can and you're halfway there.", a:"Theodore Roosevelt" },
+    { t:"The secret of getting ahead is getting started.", a:"Mark Twain" },
+    { t:"Push yourself, because no one else is going to do it for you.", a:"Reminder" },
+    { t:"Great things never came from comfort zones.", a:"Reminder" },
+    { t:"Trust the timing of your life.", a:"Reminder" },
+    { t:"One page at a time. One paper at a time.", a:"Reminder" },
+    { t:"Water, deep breaths, and one more study block. You've got this.", a:"Reminder" },
+    { t:"Consistency is what transforms average into excellence.", a:"Reminder" },
+    { t:"Don't watch the clock; do what it does. Keep going.", a:"Sam Levenson" },
+    { t:"The future depends on what you do today.", a:"Mahatma Gandhi" },
+    { t:"Be so good they can't ignore you.", a:"Reminder" },
+    { t:"Wake up with determination, go to bed with satisfaction.", a:"Reminder" }
+  ];
+  var quoteTimer = null;
+  var quoteShownHour = -1;
+
+  function renderQuoteForHour(hour, animate){
+    var q = quoteList[hour % quoteList.length];
+    var textEl = document.getElementById("quoteText");
+    var authEl = document.getElementById("quoteAuthor");
+    if (!textEl || !authEl) return;
+    function paint(){
+      textEl.textContent = q.t;
+      authEl.textContent = q.a ? "— " + q.a : "";
+    }
+    if (animate){
+      textEl.classList.add("quote-fade");
+      authEl.classList.add("quote-fade");
+      window.setTimeout(function(){
+        paint();
+        textEl.classList.remove("quote-fade");
+        authEl.classList.remove("quote-fade");
+      }, 450);
+    } else {
+      paint();
+    }
+    quoteShownHour = hour;
+  }
+
+  function startHourlyQuote(){
+    renderQuoteForHour(new Date().getHours(), false);
+    if (quoteTimer) return; // don't stack timers on repeat dashboard entries
+    quoteTimer = window.setInterval(function(){
+      var h = new Date().getHours();
+      if (h !== quoteShownHour) renderQuoteForHour(h, true);
+    }, 30000);
   }
 
   function goToLogin(){
