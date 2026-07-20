@@ -1,15 +1,48 @@
 /* Study Hub service worker — offline app shell, no push notifications.
    Bump CACHE when index.html or the shell changes so old copies are dropped. */
-const CACHE = 'studyhub-shell-v4';
+const CACHE = 'studyhub-shell-v6';
 const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
 
+// The photos index.html actually requests — the `?v=2` query is part of the
+// cache key, so it must match the <img> src exactly or caches.match() misses.
+const IMAGES = [
+  'images/discipline-desk.jpg?v=2',
+  'images/doing-this-for-me.jpg?v=2',
+  'images/eat-good-feel-good.jpg?v=2',
+  'images/eat-healthy.jpg?v=2',
+  'images/focus.jpg?v=2',
+  'images/god-within-her.jpg?v=2',
+  'images/grades-a-plus.jpg?v=2',
+  'images/gym-1-percent.jpg?v=2',
+  'images/gym-flatlay.jpg?v=2',
+  'images/iced-latte-book.jpg?v=2',
+  'images/latte-plant.jpg?v=2',
+  'images/make-him-priority.jpg?v=2',
+  'images/she-is-intelligent.jpg?v=2',
+  'images/sporty-rich.jpg?v=2',
+  'images/yoghurt-bowl.jpg?v=2',
+  // Self-care + daily planner photos — these are requested WITHOUT a ?v=
+  // query, so they must be listed bare or the cache key won't match.
+  'images/selfcare.jpg',
+  'images/planner.jpg',
+  'images/sc-skincare.jpg',
+  'images/sc-general.jpg',
+  'images/sc-motivated.jpg'
+];
+
 // Cache the app shell on install. Local files must all cache for install to
-// succeed; the CDN script is best-effort so a CDN hiccup can't block install.
+// succeed; the CDN script and the photos are best-effort so a single failed
+// fetch can't block install (an image that misses precache still backfills
+// on first online view via the fetch handler below).
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
       return cache.addAll(['./', './index.html']).then(function () {
-        return cache.add(SUPABASE_JS).catch(function () {});
+        return Promise.all(
+          [SUPABASE_JS].concat(IMAGES).map(function (u) {
+            return cache.add(u).catch(function () {});
+          })
+        );
       });
     }).then(function () { return self.skipWaiting(); })
   );

@@ -574,6 +574,124 @@
   .hidden{display:none !important;}
 
   /* ---- Sharp-corner theme: every block, card, button, input & bar is squared ---- */
+  /* ---------- Weekly planner grid (Megan-style 7 columns) ---------- */
+  .plan-add{background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);padding:14px 16px;margin-bottom:14px;}
+  .plan-add-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;}
+  .plan-add-row .fld{display:flex;flex-direction:column;gap:4px;}
+  .plan-add-row .fld.grow{flex:1 1 160px;}
+  .plan-add-row label{font-size:11.5px;font-weight:600;color:var(--text-soft);letter-spacing:.3px;text-transform:uppercase;}
+  .plan-add-row select,.plan-add-row input{
+    background:var(--surface);border:1px solid var(--border);padding:9px 10px;
+    font-size:14px;font-family:inherit;color:var(--text);width:100%;
+  }
+  .plan-add-row .btn-small{margin-top:0;flex:0 0 auto;}
+  .weekgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:22px;}
+  .daycol{background:var(--surface);border:1px solid var(--border);min-height:120px;display:flex;flex-direction:column;}
+  .daycol.is-today{border-color:var(--primary);box-shadow:var(--shadow);}
+  .daycol .dh{
+    background:var(--surface-2);border-bottom:1px solid var(--border);padding:7px 4px;
+    font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;text-align:center;color:var(--text);
+  }
+  .daycol.is-today .dh{background:var(--primary);color:#fff;}
+  .daycol .dh small{display:block;font-weight:500;font-size:10px;opacity:.75;letter-spacing:0;}
+  .daycol .db{padding:7px;flex:1;}
+  .daycol .db .none{color:var(--text-soft);font-size:12px;}
+  .ev{background:var(--surface-2);border-left:3px solid var(--primary);padding:5px 18px 5px 7px;margin-bottom:6px;font-size:12px;position:relative;line-height:1.35;}
+  .ev b{display:block;color:var(--primary-dark);font-size:10.5px;}
+  .ev .x{position:absolute;top:2px;right:4px;cursor:pointer;color:var(--text-soft);font-size:12px;}
+  .ev .x:hover{color:#b0203a;}
+  @media (max-width:760px){
+    .weekgrid{grid-template-columns:1fr;}
+    .daycol{min-height:0;}
+    .daycol .dh small{display:inline;margin-left:6px;}
+  }
+
+  /* ---------- Monthly view ---------- */
+  .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+  .month-dow{
+    text-align:center;font-size:10.5px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.4px;color:var(--text-soft);padding-bottom:4px;
+  }
+  .month-cell{
+    background:var(--surface);border:1px solid var(--border);min-height:74px;padding:5px 6px;
+    cursor:pointer;display:flex;flex-direction:column;gap:3px;-webkit-tap-highlight-color:transparent;
+  }
+  .month-cell.blank{background:transparent;border-color:transparent;cursor:default;}
+  .month-cell:not(.blank):hover{border-color:var(--text-soft);}
+  .month-cell .mnum{font-size:12.5px;font-weight:700;color:var(--text);}
+  .month-cell.is-today{border-color:var(--primary);border-width:2px;}
+  .month-cell.is-today .mnum{color:var(--primary-dark);}
+  .month-cell.is-exam{background:rgba(183,110,86,0.10);border-color:#b76e56;}
+  .month-cell.is-exam .mnum{color:#8f5340;}
+  .month-tag{font-size:9.5px;line-height:1.25;color:var(--text-soft);overflow:hidden;}
+  .month-tag.exam{color:#8f5340;font-weight:700;}
+  .month-dot{width:6px;height:6px;background:var(--primary);border-radius:50% !important;margin-top:auto;}
+  .month-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:12px;color:var(--text-soft);}
+  .month-legend span{display:flex;align-items:center;gap:6px;}
+  .month-legend i{width:12px;height:12px;display:inline-block;border:1px solid var(--border);font-style:normal;}
+  @media (max-width:520px){ .month-cell{min-height:58px;padding:3px 4px;} .month-tag{display:none;} }
+
+  /* ---------- Daily planner ---------- */
+  .prio-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
+  .prio-row:last-child{border-bottom:0;}
+  .prio-num{
+    flex:0 0 auto;width:26px;height:26px;background:linear-gradient(135deg,var(--primary),var(--accent));
+    color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;
+  }
+  .prio-row input[type=text]{
+    flex:1;background:transparent;border:0;border-bottom:1px solid transparent;
+    font-size:14.5px;font-family:inherit;color:var(--text);padding:4px 2px;
+  }
+  .prio-row input[type=text]:focus{outline:none;border-bottom-color:var(--primary);}
+  .prio-row.is-done input[type=text]{text-decoration:line-through;color:var(--text-soft);}
+  .tickbox{flex:0 0 auto;width:22px;height:22px;cursor:pointer;accent-color:var(--primary);}
+  .block-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .block-row:last-child{border-bottom:0;}
+  .block-row input[type=time]{
+    flex:0 0 auto;width:106px;background:var(--surface);border:1px solid var(--border);
+    padding:7px 8px;font-size:13.5px;font-family:inherit;color:var(--text);
+  }
+  .block-row .dash{color:var(--text-soft);font-size:13px;}
+  .block-row input[type=text]{
+    flex:1 1 140px;background:var(--surface);border:1px solid var(--border);
+    padding:7px 9px;font-size:14px;font-family:inherit;color:var(--text);
+  }
+  .block-row.is-done input[type=text]{text-decoration:line-through;color:var(--text-soft);}
+  .block-del{background:none;border:0;color:var(--text-soft);font-size:17px;cursor:pointer;padding:0 4px;font-family:inherit;}
+  .block-del:hover{color:#b0203a;}
+  .day-pick{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .day-pick input[type=date]{
+    background:var(--surface);border:1px solid var(--border);padding:9px 10px;
+    font-size:14px;font-family:inherit;color:var(--text);
+  }
+  .day-pick .today-btn{background:var(--surface-2);border:1px solid var(--border);padding:9px 14px;
+    font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;}
+  .daily-plan-text{
+    background:var(--surface-2);border-left:3px solid var(--primary);padding:11px 14px;
+    font-size:13.5px;color:var(--text);margin-bottom:16px;line-height:1.5;
+  }
+
+  /* ---------- Self-care ---------- */
+  .sc-quote{
+    border-left:4px solid var(--primary);background:var(--surface);padding:14px 18px;margin-bottom:16px;
+    font-family:Georgia,'Times New Roman',serif;font-size:17px;font-style:italic;color:var(--text);line-height:1.5;
+  }
+  .sc-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .sc-tab{
+    background:var(--surface);border:1px solid var(--border);padding:8px 13px;font-size:12.5px;
+    font-weight:600;color:var(--text-soft);cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;
+  }
+  .sc-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .step{display:flex;gap:13px;padding:12px 0;border-bottom:1px solid var(--border);}
+  .step:last-child{border-bottom:0;}
+  .step .n{
+    flex-shrink:0;width:29px;height:29px;background:linear-gradient(135deg,var(--primary),var(--accent));
+    color:#fff;font-family:Georgia,serif;font-weight:700;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step .b h4{font-size:14.5px;margin:0 0 2px;color:var(--text);}
+  .step .b p{margin:0;color:var(--text-soft);font-size:13.5px;line-height:1.5;}
+
   *{border-radius:0 !important;}
   /* keep the only genuinely round bits: the toggle knob and the tiny part dots */
   .switch .track::before{border-radius:50% !important;}
@@ -669,10 +787,34 @@
       <div class="schedule-nav-arrow">→</div>
     </div>
 
+    <div class="schedule-nav-card" id="btnOpenDaily">
+      <div>
+        <div class="schedule-nav-title">☀️ Daily planner</div>
+        <div class="schedule-nav-sub">Plan tomorrow tonight — your top 3 priorities and your hour-by-hour times</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
     <div class="schedule-nav-card" id="btnOpenWeek">
       <div>
-        <div class="schedule-nav-title">🗓️ Weekly view</div>
-        <div class="schedule-nav-sub">See a whole week at a glance, with hours logged per day</div>
+        <div class="schedule-nav-title">🗓️ Weekly planner</div>
+        <div class="schedule-nav-sub">Build your week in a 7-day grid, with your schedule and hours below</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenMonth">
+      <div>
+        <div class="schedule-nav-title">📆 Monthly view</div>
+        <div class="schedule-nav-sub">A whole month at a glance, with every exam day highlighted</div>
+      </div>
+      <div class="schedule-nav-arrow">→</div>
+    </div>
+
+    <div class="schedule-nav-card" id="btnOpenSelfcare">
+      <div>
+        <div class="schedule-nav-title">🌸 Self-care</div>
+        <div class="schedule-nav-sub">Your routines — morning, evening, skincare, study reset and more</div>
       </div>
       <div class="schedule-nav-arrow">→</div>
     </div>
@@ -764,14 +906,82 @@
   <div id="screenWeek" class="hidden schedule-shell">
     <button class="schedule-back" id="btnBackToDashboardFromWeek">← Back to dashboard</button>
     <div class="photo-hero"><img src="images/discipline-desk.jpg?v=2" alt=""></div>
-    <h1 class="schedule-title">Weekly View</h1>
-    <p class="schedule-sub">Tap any day to open it in your full schedule.</p>
+    <h1 class="schedule-title">Weekly Planner</h1>
+    <p class="schedule-sub">Build your week in the grid, then check your schedule and hours below.</p>
     <div class="week-nav">
       <button class="week-nav-btn" id="btnPrevWeek">←</button>
       <div class="week-range" id="weekRangeLabel"></div>
       <button class="week-nav-btn" id="btnNextWeek">→</button>
     </div>
+
+    <div class="plan-add">
+      <div class="plan-add-row">
+        <div class="fld"><label for="planDay">Day</label><select id="planDay"></select></div>
+        <div class="fld"><label for="planTime">Time</label><input type="time" id="planTime"></div>
+        <div class="fld grow"><label for="planAct">Activity</label><input type="text" id="planAct" placeholder="e.g. Wiskunde revision"></div>
+        <button class="btn btn-small" id="btnPlanAdd" type="button">＋ Add</button>
+      </div>
+    </div>
+    <div class="weekgrid" id="weekGrid"></div>
+
+    <div class="section-title">📖 Your schedule &amp; hours this week</div>
     <div id="weekList"></div>
+  </div>
+
+  <!-- ============ MONTHLY VIEW SCREEN ============ -->
+  <div id="screenMonth" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackMonth">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/grades-a-plus.jpg?v=2" alt=""></div>
+    <h1 class="schedule-title">Monthly View 📆</h1>
+    <p class="schedule-sub">Exam days are highlighted. Tap any day to open it in your full schedule.</p>
+    <div class="week-nav">
+      <button class="week-nav-btn" id="btnPrevMonth">←</button>
+      <div class="week-range" id="monthRangeLabel"></div>
+      <button class="week-nav-btn" id="btnNextMonth">→</button>
+    </div>
+    <div class="month-grid" id="monthGrid"></div>
+    <div class="month-legend">
+      <span><i style="background:rgba(183,110,86,0.10);border-color:#b76e56;"></i> Exam day</span>
+      <span><i style="border-color:var(--primary);border-width:2px;"></i> Today</span>
+      <span><i style="background:var(--primary);border:0;width:8px;height:8px;"></i> Hours logged</span>
+    </div>
+  </div>
+
+  <!-- ============ DAILY PLANNER SCREEN ============ -->
+  <div id="screenDaily" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackDaily">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/planner.jpg" alt=""></div>
+    <h1 class="schedule-title">Daily Planner ☀️</h1>
+    <p class="schedule-sub">Plan the day ahead: pick your top 3, then block out your times.</p>
+
+    <div class="day-pick">
+      <input type="date" id="dailyDate">
+      <button class="today-btn" id="btnDailyToday" type="button">Today</button>
+      <button class="today-btn" id="btnDailyTomorrow" type="button">Tomorrow →</button>
+    </div>
+
+    <div id="dailySchedNote"></div>
+
+    <div class="progress-card">
+      <div class="section-title" style="margin-top:0;">⭐ Top 3 priorities</div>
+      <div id="dailyPriorities"></div>
+    </div>
+
+    <div class="progress-card">
+      <div class="section-title" style="margin-top:0;">⏰ Your times</div>
+      <div id="dailyBlocks"></div>
+      <button class="btn btn-small" id="btnDailyAddBlock" type="button">＋ Add a time block</button>
+    </div>
+  </div>
+
+  <!-- ============ SELF-CARE SCREEN ============ -->
+  <div id="screenSelfcare" class="hidden schedule-shell">
+    <button class="schedule-back" id="btnBackSelfcare">← Back to dashboard</button>
+    <div class="photo-hero"><img src="images/selfcare.jpg" alt=""></div>
+    <h1 class="schedule-title">Self-Care 🌸</h1>
+    <p class="schedule-sub">Little routines to keep you steady, rested and well while you study.</p>
+    <div class="sc-tabs" id="scTabs"></div>
+    <div id="scBody"></div>
   </div>
 
   <!-- ============ FAREWELL PREP PLAN SCREEN ============ -->
@@ -1935,10 +2145,12 @@
     weekEnd.setDate(weekStart.getDate() + 6);
     document.getElementById("weekRangeLabel").textContent = formatDate(weekStart) + " – " + formatDate(weekEnd);
 
+    renderWeekGrid(weekStart);
+
     var startIso = toIsoDate(weekStart.getFullYear(), weekStart.getMonth() + 1, weekStart.getDate());
     var endIso = toIsoDate(weekEnd.getFullYear(), weekEnd.getMonth() + 1, weekEnd.getDate());
 
-    sbClient.from("study_log").select("studied_on, minutes").is("subject_id", null).gte("studied_on", startIso).lte("studied_on", endIso).then(function(result){
+    sbClient.from("study_log").select("studied_on, minutes, done").is("subject_id", null).gte("studied_on", startIso).lte("studied_on", endIso).then(function(result){
       // Dropped if the user navigated to a different week before this response arrived.
       if (weekStart.getTime() !== currentWeekStart.getTime()) return;
 
@@ -1947,6 +2159,9 @@
         showToast("Couldn't load your logged hours — check your internet and try again.");
       } else {
         result.data.forEach(function(row){
+          // "h logged" counts completed blocks only — planned-but-unticked
+          // blocks don't add to the badge (her call, 2026-07-16).
+          if (!row.done) return;
           minutesByDate[row.studied_on] = (minutesByDate[row.studied_on] || 0) + row.minutes;
         });
       }
@@ -1999,6 +2214,603 @@
         list.appendChild(card);
       }
     });
+  }
+
+  /* ============================================================
+     PLANNER — weekly grid, monthly view, daily planner.
+     All three are backed by the single `planner` table, split by
+     `kind`: 'week' (grid activity), 'block' (a timed block on a day),
+     'priority' (one of the day's top 3).
+     House rules: never .upsert() — select/insert then update; every
+     failed save shows the friendly toast; writes are chained per row
+     so a new row's insert settles before any follow-up update.
+     ============================================================ */
+
+  var SAVE_FAIL = "Couldn't save that — check your internet and try again.";
+
+  // Chains writes per row object. `slot` carries its own id once inserted,
+  // so rapid edits on a brand-new row can't fire two inserts (same guard
+  // the study-block planner uses).
+  function plannerSave(slot){
+    slot._p = (slot._p || Promise.resolve()).then(function(){
+      var payload = {
+        entry_date: slot.entry_date,
+        kind: slot.kind,
+        position: slot.position || 0,
+        start_time: slot.start_time || null,
+        end_time: slot.end_time || null,
+        title: slot.title || "",
+        done: !!slot.done
+      };
+      if (slot.id){
+        return sbClient.from("planner").update(payload).eq("id", slot.id).then(function(r){
+          if (r.error) showToast(SAVE_FAIL);
+        });
+      }
+      return sbClient.from("planner").insert(payload).select().then(function(r){
+        if (r.error || !r.data || !r.data.length){ showToast(SAVE_FAIL); return; }
+        slot.id = r.data[0].id;
+        // Deleted while the insert was in flight — clean up the orphan row.
+        if (slot._deleted) return sbClient.from("planner").delete().eq("id", slot.id);
+      });
+    });
+    return slot._p;
+  }
+
+  function plannerDelete(slot){
+    if (!slot.id){
+      // Insert still in flight (or never happened) — flag it so plannerSave cleans up.
+      slot._deleted = true;
+      return slot._p ? slot._p.then(function(){}) : Promise.resolve();
+    }
+    return sbClient.from("planner").delete().eq("id", slot.id).then(function(r){
+      if (r.error) showToast("Couldn't delete that — check your internet and try again.");
+    });
+  }
+
+  function timeLabel(t){
+    return t ? String(t).slice(0, 5) : "";
+  }
+
+  /* ---------- Weekly planner grid ---------- */
+
+  var weekGridItems = [];
+
+  function renderWeekGrid(weekStart){
+    var startIso = isoOfDate(weekStart);
+    var lastDay = new Date(weekStart);
+    lastDay.setDate(weekStart.getDate() + 6);
+    var endIso = isoOfDate(lastDay);
+    var todayIso = isoToday();
+
+    // Day dropdown always reflects the week currently on screen.
+    var daySelect = document.getElementById("planDay");
+    daySelect.innerHTML = "";
+    for (var k = 0; k < 7; k++){
+      var dd = new Date(weekStart);
+      dd.setDate(weekStart.getDate() + k);
+      var opt = document.createElement("option");
+      opt.value = isoOfDate(dd);
+      opt.textContent = dayLabels[dd.getDay()] + " " + dd.getDate() + " " + monthShortNames[dd.getMonth()];
+      daySelect.appendChild(opt);
+    }
+
+    sbClient.from("planner").select("*").eq("kind", "week")
+      .gte("entry_date", startIso).lte("entry_date", endIso).then(function(result){
+      // Dropped if she navigated to another week while this was in flight.
+      if (weekStart.getTime() !== currentWeekStart.getTime()) return;
+      if (result.error){
+        showToast("Couldn't load your weekly plan — check your internet and try again.");
+        weekGridItems = [];
+      } else {
+        weekGridItems = result.data.slice();
+      }
+      paintWeekGrid(weekStart, todayIso);
+    });
+  }
+
+  function paintWeekGrid(weekStart, todayIso){
+    var grid = document.getElementById("weekGrid");
+    grid.innerHTML = "";
+
+    for (var i = 0; i < 7; i++){
+      var d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      var dIso = isoOfDate(d);
+
+      var col = document.createElement("div");
+      col.className = "daycol" + (dIso === todayIso ? " is-today" : "");
+
+      var head = document.createElement("div");
+      head.className = "dh";
+      head.textContent = dayLabels[d.getDay()];
+      var small = document.createElement("small");
+      small.textContent = d.getDate() + " " + monthShortNames[d.getMonth()];
+      head.appendChild(small);
+      col.appendChild(head);
+
+      var body = document.createElement("div");
+      body.className = "db";
+
+      var items = weekGridItems.filter(function(row){ return row.entry_date === dIso; });
+      items.sort(function(a, b){ return (a.start_time || "").localeCompare(b.start_time || ""); });
+
+      if (!items.length){
+        var none = document.createElement("div");
+        none.className = "none";
+        none.textContent = "—";
+        body.appendChild(none);
+      } else {
+        items.forEach(function(row){
+          var ev = document.createElement("div");
+          ev.className = "ev";
+          if (row.start_time){
+            var b = document.createElement("b");
+            b.textContent = timeLabel(row.start_time);
+            ev.appendChild(b);
+          }
+          ev.appendChild(document.createTextNode(row.title));
+          var x = document.createElement("span");
+          x.className = "x";
+          x.textContent = "✕";
+          x.title = "Remove";
+          x.addEventListener("click", function(){
+            plannerDelete({ id: row.id }).then(function(){
+              weekGridItems = weekGridItems.filter(function(r){ return r.id !== row.id; });
+              paintWeekGrid(weekStart, todayIso);
+            });
+          });
+          ev.appendChild(x);
+          body.appendChild(ev);
+        });
+      }
+
+      col.appendChild(body);
+      grid.appendChild(col);
+    }
+  }
+
+  function addWeekGridItem(){
+    var dateIso = document.getElementById("planDay").value;
+    var timeVal = document.getElementById("planTime").value;
+    var actVal = document.getElementById("planAct").value.trim();
+    if (!actVal){ showToast("Give the activity a name first."); return; }
+
+    var slot = {
+      entry_date: dateIso,
+      kind: "week",
+      start_time: timeVal || null,
+      title: actVal
+    };
+    plannerSave(slot).then(function(){
+      if (!slot.id) return;
+      weekGridItems.push({ id: slot.id, entry_date: dateIso, start_time: timeVal || null, title: actVal });
+      document.getElementById("planAct").value = "";
+      paintWeekGrid(new Date(currentWeekStart), isoToday());
+    });
+  }
+
+  /* ---------- Monthly view ---------- */
+
+  var currentMonthStart = null;
+  var monthNamesFull = ["January","February","March","April","May","June",
+                        "July","August","September","October","November","December"];
+
+  function renderMonth(){
+    var today = startOfToday();
+    if (!currentMonthStart) currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    // Snapshot — prev/next mutate currentMonthStart, so the async .then must
+    // not read it again (same stale-response guard as the weekly view).
+    var monthStart = new Date(currentMonthStart);
+    var year = monthStart.getFullYear();
+    var month = monthStart.getMonth();
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    var monthEnd = new Date(year, month, daysInMonth);
+
+    document.getElementById("monthRangeLabel").textContent = monthNamesFull[month] + " " + year;
+
+    var startIso = isoOfDate(monthStart);
+    var endIso = isoOfDate(monthEnd);
+
+    sbClient.from("study_log").select("studied_on, minutes, done").is("subject_id", null)
+      .gte("studied_on", startIso).lte("studied_on", endIso).then(function(result){
+      if (monthStart.getTime() !== currentMonthStart.getTime()) return;
+
+      var minutesByDate = {};
+      if (result.error){
+        showToast("Couldn't load your logged hours — check your internet and try again.");
+      } else {
+        result.data.forEach(function(row){
+          if (!row.done) return;
+          minutesByDate[row.studied_on] = (minutesByDate[row.studied_on] || 0) + row.minutes;
+        });
+      }
+
+      var grid = document.getElementById("monthGrid");
+      grid.innerHTML = "";
+
+      // Monday-first header row, matching the weekly view.
+      ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(function(name){
+        var h = document.createElement("div");
+        h.className = "month-dow";
+        h.textContent = name;
+        grid.appendChild(h);
+      });
+
+      // Blank cells before the 1st. getDay() is Sunday-0, so shift to Monday-0.
+      var lead = (monthStart.getDay() + 6) % 7;
+      for (var b = 0; b < lead; b++){
+        var blank = document.createElement("div");
+        blank.className = "month-cell blank";
+        grid.appendChild(blank);
+      }
+
+      for (var day = 1; day <= daysInMonth; day++){
+        var cellDate = new Date(year, month, day);
+        var cellIso = isoOfDate(cellDate);
+        var entry = scheduleEntryForDate(cellDate);
+        var isExam = !!(entry && entry.exam);
+        var isToday = cellDate.getTime() === today.getTime();
+
+        var cell = document.createElement("div");
+        cell.className = "month-cell" + (isExam ? " is-exam" : "") + (isToday ? " is-today" : "");
+
+        var num = document.createElement("div");
+        num.className = "mnum";
+        num.textContent = day;
+        cell.appendChild(num);
+
+        if (entry){
+          var tag = document.createElement("div");
+          tag.className = "month-tag" + (isExam ? " exam" : "");
+          tag.textContent = isExam ? "EXAM" : entry.text;
+          cell.appendChild(tag);
+        }
+
+        if (minutesByDate[cellIso] > 0){
+          var dot = document.createElement("div");
+          dot.className = "month-dot";
+          cell.appendChild(dot);
+        }
+
+        cell.addEventListener("click", (function(targetIso){
+          return function(){
+            document.getElementById("screenMonth").classList.add("hidden");
+            document.getElementById("screenSchedule").classList.remove("hidden");
+            renderSchedule(targetIso);
+          };
+        })(cellIso));
+
+        grid.appendChild(cell);
+      }
+    });
+  }
+
+  /* ---------- Daily planner ---------- */
+
+  var dailyDateIso = null;
+  var dailyPrioritySlots = [];
+  var dailyBlockSlots = [];
+
+  function renderDaily(){
+    if (!dailyDateIso) dailyDateIso = isoToday();
+    document.getElementById("dailyDate").value = dailyDateIso;
+
+    var dateIso = dailyDateIso;
+
+    // What the study schedule says about this day, for context.
+    var noteBox = document.getElementById("dailySchedNote");
+    var entry = scheduleEntryForDate(parseIsoDateLocal(dateIso));
+    if (entry){
+      noteBox.className = "daily-plan-text";
+      noteBox.textContent = (entry.exam ? "📝 Exam day — " : "📖 Your schedule: ") + entry.text;
+    } else {
+      noteBox.className = "";
+      noteBox.textContent = "";
+    }
+
+    sbClient.from("planner").select("*").eq("entry_date", dateIso)
+      .in("kind", ["priority", "block"]).then(function(result){
+      // Dropped if she changed the date while this was in flight.
+      if (dateIso !== dailyDateIso) return;
+
+      var rows = [];
+      if (result.error){
+        showToast("Couldn't load your day — check your internet and try again.");
+      } else {
+        rows = result.data;
+      }
+
+      // Three fixed priority slots; a row is only created once she types in one.
+      dailyPrioritySlots = [];
+      for (var p = 1; p <= 3; p++){
+        var existing = rows.filter(function(r){ return r.kind === "priority" && r.position === p; })[0];
+        dailyPrioritySlots.push(existing
+          ? { id: existing.id, entry_date: dateIso, kind: "priority", position: p, title: existing.title, done: existing.done }
+          : { entry_date: dateIso, kind: "priority", position: p, title: "", done: false });
+      }
+
+      dailyBlockSlots = rows.filter(function(r){ return r.kind === "block"; })
+        .sort(function(a, b){ return (a.start_time || "").localeCompare(b.start_time || ""); })
+        .map(function(r){
+          return { id: r.id, entry_date: dateIso, kind: "block",
+                   start_time: r.start_time, end_time: r.end_time, title: r.title, done: r.done };
+        });
+
+      paintDailyPriorities();
+      paintDailyBlocks();
+    });
+  }
+
+  function paintDailyPriorities(){
+    var box = document.getElementById("dailyPriorities");
+    box.innerHTML = "";
+
+    dailyPrioritySlots.forEach(function(slot){
+      var row = document.createElement("div");
+      row.className = "prio-row" + (slot.done ? " is-done" : "");
+
+      var num = document.createElement("div");
+      num.className = "prio-num";
+      num.textContent = slot.position;
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.value = slot.title || "";
+      input.placeholder = "Priority " + slot.position + "…";
+      input.addEventListener("change", function(){
+        slot.title = input.value.trim();
+        // Don't create an empty row just because she tabbed through the field.
+        if (!slot.id && !slot.title) return;
+        plannerSave(slot);
+      });
+
+      var tick = document.createElement("input");
+      tick.type = "checkbox";
+      tick.className = "tickbox";
+      tick.checked = !!slot.done;
+      tick.title = "Done";
+      tick.addEventListener("change", function(){
+        slot.done = tick.checked;
+        slot.title = input.value.trim();
+        if (!slot.id && !slot.title){ tick.checked = false; slot.done = false; showToast("Write the priority first, then tick it off."); return; }
+        row.className = "prio-row" + (slot.done ? " is-done" : "");
+        plannerSave(slot);
+      });
+
+      row.appendChild(num);
+      row.appendChild(input);
+      row.appendChild(tick);
+      box.appendChild(row);
+    });
+  }
+
+  function paintDailyBlocks(){
+    var box = document.getElementById("dailyBlocks");
+    box.innerHTML = "";
+
+    if (!dailyBlockSlots.length){
+      var empty = document.createElement("div");
+      empty.className = "none";
+      empty.style.color = "var(--text-soft)";
+      empty.style.fontSize = "13.5px";
+      empty.style.padding = "6px 0";
+      empty.textContent = "No time blocks yet — add your first one below.";
+      box.appendChild(empty);
+    }
+
+    dailyBlockSlots.forEach(function(slot){
+      var row = document.createElement("div");
+      row.className = "block-row" + (slot.done ? " is-done" : "");
+
+      var start = document.createElement("input");
+      start.type = "time";
+      start.value = timeLabel(slot.start_time);
+      start.addEventListener("change", function(){
+        slot.start_time = start.value || null;
+        plannerSave(slot);
+      });
+
+      var dash = document.createElement("span");
+      dash.className = "dash";
+      dash.textContent = "–";
+
+      var end = document.createElement("input");
+      end.type = "time";
+      end.value = timeLabel(slot.end_time);
+      end.addEventListener("change", function(){
+        slot.end_time = end.value || null;
+        plannerSave(slot);
+      });
+
+      var text = document.createElement("input");
+      text.type = "text";
+      text.value = slot.title || "";
+      text.placeholder = "What are you doing?";
+      text.addEventListener("change", function(){
+        slot.title = text.value.trim();
+        plannerSave(slot);
+      });
+
+      var tick = document.createElement("input");
+      tick.type = "checkbox";
+      tick.className = "tickbox";
+      tick.checked = !!slot.done;
+      tick.title = "Done";
+      tick.addEventListener("change", function(){
+        slot.done = tick.checked;
+        row.className = "block-row" + (slot.done ? " is-done" : "");
+        plannerSave(slot);
+      });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "block-del";
+      del.textContent = "×";
+      del.title = "Delete this block";
+      del.addEventListener("click", function(){
+        plannerDelete(slot).then(function(){
+          dailyBlockSlots = dailyBlockSlots.filter(function(s){ return s !== slot; });
+          paintDailyBlocks();
+        });
+      });
+
+      row.appendChild(start);
+      row.appendChild(dash);
+      row.appendChild(end);
+      row.appendChild(text);
+      row.appendChild(tick);
+      row.appendChild(del);
+      box.appendChild(row);
+    });
+  }
+
+  function addDailyBlock(){
+    // Blank on purpose — she fills it in herself, same as the study-block planner.
+    dailyBlockSlots.push({ entry_date: dailyDateIso, kind: "block",
+                           start_time: null, end_time: null, title: "", done: false });
+    paintDailyBlocks();
+  }
+
+  /* ---------- Self-care ---------- */
+
+  var SELFCARE = [
+    { key:"morning", label:"Morning", image:"images/sc-motivated.jpg",
+      quote:"How you start the morning is how you meet the day.",
+      steps:[
+        ["Wake at a steady time","Same time every day — even weekends. It steadies your whole body clock, and matric brain works best on rhythm."],
+        ["Water before anything else","A full glass before your phone. You woke up dehydrated and it's half of why mornings feel foggy."],
+        ["Phone-free first 20 minutes","Let your own thoughts arrive before everyone else's do."],
+        ["Move for two minutes","A stretch, a walk to the kitchen, anything that tells your body it's daytime."],
+        ["Eat something real","Even small. You can't concentrate for six hours on nothing."],
+        ["Set your top 3","Open your Daily Planner and pick the three things that would make today count."]
+      ]},
+    { key:"study", label:"Study reset", image:"images/focus.jpg",
+      quote:"You don't need more hours. You need better hours.",
+      steps:[
+        ["Phone in another room","Not face-down. Another room. This is the single biggest change you can make."],
+        ["One subject at a time","Switching costs you more focus than you think. Finish the block you started."],
+        ["50 on, 10 off","Work fifty minutes, then genuinely stop for ten. Stand up, look out a window."],
+        ["Write it, don't read it","Past papers and blank-page recall beat re-reading notes every single time."],
+        ["Hardest thing first","Do the subject you're avoiding while your brain is freshest."],
+        ["Tick it off","Log the block when it's done — seeing the week fill up is its own fuel."]
+      ]},
+    { key:"evening", label:"Evening", image:"images/latte-plant.jpg",
+      quote:"The evening is for laying the day down gently.",
+      steps:[
+        ["Decide you're done","Pick a stop time and honour it. Tomorrow gets its own energy."],
+        ["Plan tomorrow tonight","Five minutes in the Daily Planner saves you an hour of dithering in the morning."],
+        ["Tidy one surface","A clear desk is a quieter head when you sit down tomorrow."],
+        ["Screens down early","Blue light and doom-scrolling both steal the deep part of your sleep."],
+        ["Same bedtime","A steady bedtime is the kindest thing you can do for tomorrow-you."]
+      ]},
+    { key:"skincare", label:"Skincare", image:"images/sc-skincare.jpg",
+      quote:"Consistency, not perfection, is what your skin remembers.",
+      steps:[
+        ["Cleanse gently","Wash away the day — never scrub hard, especially when you're stressed and breaking out."],
+        ["Treat","A serum for what your skin actually needs: hydration, calm, or brightness."],
+        ["Moisturise","Morning and night, every time, no exceptions."],
+        ["SPF every morning","Sunscreen is the single best thing you can do for future-you's skin."],
+        ["Give it time","Six weeks before you judge a new product. Stress skin settles when the routine stays steady."]
+      ]},
+    { key:"body", label:"Body & fuel", image:"images/eat-good-feel-good.jpg",
+      quote:"Fuel the body that's carrying you through matric.",
+      steps:[
+        ["Eat before you're starving","Low blood sugar reads exactly like anxiety. Don't study through it."],
+        ["Protein at breakfast","It keeps you level through a long morning far better than sugar does."],
+        ["Water on your desk","Sipping through the day, not a litre at 9pm."],
+        ["Move most days","The gym plan, a walk, a stretch — it clears your head as much as it builds you."],
+        ["Sleep is study","Your brain files what you learned while you sleep. Cutting sleep to study is cutting study."]
+      ]},
+    { key:"stress", label:"When it's too much", image:"images/god-within-her.jpg",
+      quote:"You're not behind. You're human. Start again gently.",
+      steps:[
+        ["Stop and breathe","In for 4, hold 4, out for 4, hold 4. Three rounds. It genuinely works."],
+        ["Name it out loud","\"I'm overwhelmed because of Wiskunde Paper 1.\" Vague dread shrinks when it gets a name."],
+        ["Shrink the task","Not the whole syllabus — one page. Momentum comes after starting, not before."],
+        ["Change the room","Step outside for two minutes. A different view resets a spinning head."],
+        ["Tell someone","Your mom, a friend, a teacher. Carrying it alone makes it heavier than it is."],
+        ["One tiny win","Do one easy thing and tick it off, just to feel capable again."]
+      ]},
+    { key:"habits", label:"Better habits", image:"images/sc-general.jpg",
+      quote:"You don't rise to your goals — you fall to your systems.",
+      steps:[
+        ["Start embarrassingly small","Two minutes counts. Small enough that you can't talk yourself out of it."],
+        ["Stack it","Attach the new habit onto one you already do without thinking."],
+        ["Make it obvious","Books out, phone away, the night before. Remove the decision."],
+        ["Never miss twice","One off day is fine. Two is how a habit dies."],
+        ["Track it","A visible chain of ticks is surprisingly hard to break."],
+        ["Be the person","Ask what a girl who gets the marks she wants would do right now — then do that."]
+      ]}
+  ];
+
+  var scActiveKey = "morning";
+
+  function renderSelfcare(){
+    var tabs = document.getElementById("scTabs");
+    tabs.innerHTML = "";
+    SELFCARE.forEach(function(routine){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sc-tab" + (routine.key === scActiveKey ? " active" : "");
+      btn.textContent = routine.label;
+      btn.addEventListener("click", function(){
+        scActiveKey = routine.key;
+        renderSelfcare();
+      });
+      tabs.appendChild(btn);
+    });
+
+    var routine = SELFCARE.filter(function(r){ return r.key === scActiveKey; })[0];
+    var body = document.getElementById("scBody");
+    body.innerHTML = "";
+
+    if (routine.image){
+      var heroBox = document.createElement("div");
+      heroBox.className = "photo-hero";
+      var img = document.createElement("img");
+      // No loading="lazy" — images on initially-hidden screens with auto
+      // height never intersect the viewport, so lazy loading deadlocks.
+      img.src = routine.image;
+      img.alt = "";
+      heroBox.appendChild(img);
+      body.appendChild(heroBox);
+    }
+
+    var quote = document.createElement("div");
+    quote.className = "sc-quote";
+    quote.textContent = "“" + routine.quote + "”";
+    body.appendChild(quote);
+
+    var card = document.createElement("div");
+    card.className = "progress-card";
+    var heading = document.createElement("div");
+    heading.className = "section-title";
+    heading.style.marginTop = "0";
+    heading.textContent = routine.label;
+    card.appendChild(heading);
+
+    routine.steps.forEach(function(step, index){
+      var stepEl = document.createElement("div");
+      stepEl.className = "step";
+      var n = document.createElement("div");
+      n.className = "n";
+      n.textContent = index + 1;
+      var b = document.createElement("div");
+      b.className = "b";
+      var h4 = document.createElement("h4");
+      h4.textContent = step[0];
+      var p = document.createElement("p");
+      p.textContent = step[1];
+      b.appendChild(h4);
+      b.appendChild(p);
+      stepEl.appendChild(n);
+      stepEl.appendChild(b);
+      card.appendChild(stepEl);
+    });
+
+    body.appendChild(card);
   }
 
   function showDashboardScreen(username){
@@ -2059,7 +2871,7 @@
         paint();
         textEl.classList.remove("quote-fade");
         authEl.classList.remove("quote-fade");
-      }, 450);
+      }, 550);
     } else {
       paint();
     }
@@ -2261,6 +3073,81 @@
     renderWeek();
   });
 
+  document.getElementById("btnPlanAdd").addEventListener("click", addWeekGridItem);
+  document.getElementById("planAct").addEventListener("keydown", function(event){
+    if (event.key === "Enter") addWeekGridItem();
+  });
+
+  /* ---- Monthly view ---- */
+
+  document.getElementById("btnOpenMonth").addEventListener("click", function(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenMonth").classList.remove("hidden");
+    renderMonth();
+  });
+
+  document.getElementById("btnBackMonth").addEventListener("click", function(){
+    document.getElementById("screenMonth").classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+  });
+
+  document.getElementById("btnPrevMonth").addEventListener("click", function(){
+    currentMonthStart.setMonth(currentMonthStart.getMonth() - 1);
+    renderMonth();
+  });
+
+  document.getElementById("btnNextMonth").addEventListener("click", function(){
+    currentMonthStart.setMonth(currentMonthStart.getMonth() + 1);
+    renderMonth();
+  });
+
+  /* ---- Daily planner ---- */
+
+  document.getElementById("btnOpenDaily").addEventListener("click", function(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenDaily").classList.remove("hidden");
+    renderDaily();
+  });
+
+  document.getElementById("btnBackDaily").addEventListener("click", function(){
+    document.getElementById("screenDaily").classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+  });
+
+  document.getElementById("dailyDate").addEventListener("change", function(){
+    var picked = document.getElementById("dailyDate").value;
+    if (!picked) return;
+    dailyDateIso = picked;
+    renderDaily();
+  });
+
+  document.getElementById("btnDailyToday").addEventListener("click", function(){
+    dailyDateIso = isoToday();
+    renderDaily();
+  });
+
+  document.getElementById("btnDailyTomorrow").addEventListener("click", function(){
+    var tomorrow = startOfToday();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dailyDateIso = isoOfDate(tomorrow);
+    renderDaily();
+  });
+
+  document.getElementById("btnDailyAddBlock").addEventListener("click", addDailyBlock);
+
+  /* ---- Self-care ---- */
+
+  document.getElementById("btnOpenSelfcare").addEventListener("click", function(){
+    document.getElementById("screenDashboard").classList.add("hidden");
+    document.getElementById("screenSelfcare").classList.remove("hidden");
+    renderSelfcare();
+  });
+
+  document.getElementById("btnBackSelfcare").addEventListener("click", function(){
+    document.getElementById("screenSelfcare").classList.add("hidden");
+    document.getElementById("screenDashboard").classList.remove("hidden");
+  });
+
   ["inputUsername", "inputPassword"].forEach(function(id){
     document.getElementById(id).addEventListener("keydown", function(event){
       if (event.key === "Enter") document.getElementById("btnLogin").click();
@@ -2360,8 +3247,24 @@
   function renderBibleStories(){
     var list = document.getElementById("bibleStoryList");
     list.innerHTML = "";
+    /* Display order only: bibleStories has all 66 core stories first and the
+       42 deeper ones appended, so iterating in array order repeats every part
+       heading when "show deeper" is on. Sort a view by part (core before
+       deeper within each part) — the checkoff key stays "bible:" + the
+       ORIGINAL array index, so never renumber or reorder bibleStories itself. */
+    var partOrder = [];
+    bibleStories.forEach(function(s){ if (partOrder.indexOf(s.part) === -1) partOrder.push(s.part); });
+    var view = bibleStories.map(function(s, idx){ return { s: s, idx: idx }; });
+    view.sort(function(a, b){
+      var pa = partOrder.indexOf(a.s.part), pb = partOrder.indexOf(b.s.part);
+      if (pa !== pb) return pa - pb;
+      var da = a.s.depth === "core" ? 0 : 1, db = b.s.depth === "core" ? 0 : 1;
+      if (da !== db) return da - db;
+      return a.idx - b.idx;
+    });
     var lastPart = "";
-    bibleStories.forEach(function(s, idx){
+    view.forEach(function(v){
+      var s = v.s, idx = v.idx;
       if (bibleFilter !== "All" && s.part !== bibleFilter) return;
       if (!bibleShowDeeper && s.depth !== "core") return;
 
