@@ -1178,44 +1178,53 @@
   /* ---------- Farewell prep plan (reference content) ---------- */
   /* Gym program keyed by weekday: 0=Sun … 6=Sat. rest days have rest:true. */
   var gymPlan = {
-    1: { day:"Monday", name:"Glutes & Legs (Heavy)", cardio:"10 min stairmaster", ex:[
+    1: { day:"Monday", name:"Glutes & Quads (Heavy)", cardio:"10 min stairmaster", ex:[
       ["Barbell or machine hip thrust","4","10–12"],
-      ["Bulgarian split squat","3","10 each leg"],
+      ["Goblet squat","3","10"],
       ["Romanian deadlift","3","10"],
-      ["Leg press (feet high/wide for glutes)","3","12"],
-      ["Cable glute kickback","3","12–15 each leg"]
+      ["Leg press (feet low/narrow, for quads)","3","12"],
+      ["Bulgarian split squat","3","10 each leg"],
+      ["Standing calf raise","3","15"]
     ]},
-    2: { day:"Tuesday", name:"Back & Shoulders", cardio:"10 min bike", ex:[
+    2: { day:"Tuesday", name:"Back, Shoulders & Arms", cardio:"10 min bike", ex:[
       ["Lat pulldown or assisted pull-up","4","10"],
       ["Seated cable row","3","12"],
       ["Dumbbell shoulder press","3","10"],
       ["Face pulls","3","15"],
       ["Lateral raises","3","15"],
-      ["Rear delt fly","3","15"]
+      ["Rear delt fly","3","15"],
+      ["Bicep curls","3","12"],
+      ["Tricep pushdown","3","12"]
     ]},
     3: { day:"Wednesday", name:"Glutes & Legs (Volume) + Core", cardio:"10 min incline treadmill walk", ex:[
       ["Walking lunges","3","12 each leg"],
       ["Hip thrust (lighter, higher reps)","3","15"],
       ["Sumo squat (dumbbell/kettlebell)","3","12"],
       ["Glute machine (abduction)","3","15"],
+      ["Standing calf raise","3","15"],
       ["Plank","3","30–45 sec"],
-      ["Hanging or lying leg raises","3","12"]
+      ["Weighted lying leg raises","3","12"],
+      ["Dead bug","3","12 each side"]
     ]},
     4: { day:"Thursday", name:"Rest or block walk", rest:true, note:"Easy day. Optional 1km block walk. Recovery matters just as much as training." },
-    5: { day:"Friday", name:"Back & Shoulders + Core", cardio:"10 min stairmaster", ex:[
+    5: { day:"Friday", name:"Back, Shoulders & Arms + Core", cardio:"10 min stairmaster", ex:[
       ["Single-arm dumbbell row","3","10 each side"],
       ["Reverse pec deck / rear delt machine","3","15"],
       ["Dumbbell shoulder press","3","10"],
       ["Lateral raises","3","15"],
-      ["Cable woodchoppers","3","12 each side"],
-      ["Dead bug","3","10 each side"]
+      ["Bicep curls","3","12"],
+      ["Tricep overhead extension","3","12"],
+      ["Cable woodchoppers (keep light)","3","12 each side"],
+      ["Dead bug","3","10 each side"],
+      ["Weighted crunch","3","15"]
     ]},
     6: { day:"Saturday", name:"Glutes & Legs (Finisher-style)", cardio:"10 min bike", ex:[
       ["Barbell hip thrust","4","10"],
       ["Step-ups (with dumbbells)","3","10 each leg"],
       ["Curtsy lunge","3","10 each leg"],
-      ["Standing calf raise","3","15"],
-      ["Cable kickback","3","15 each leg"]
+      ["Leg extension","3","15"],
+      ["Standing calf raise","4","15"],
+      ["Glute machine (abduction/kickback, seated)","3","15 each leg"]
     ]},
     0: { day:"Sunday", name:"Rest or block walk", rest:true, note:"Easy day. Optional 1km block walk." }
   };
@@ -3214,7 +3223,7 @@
       }
       html += '</div>';
     });
-    html += '<div class="plan-tip"><strong>Progression:</strong> once an exercise feels easy at the top of the rep range, add a little weight next session — that\'s what builds glutes/legs/back/shoulders over time.</div>';
+    html += '<div class="plan-tip"><strong>Progression:</strong> once an exercise feels easy at the top of the rep range, add a little weight next session — that\'s what builds glutes/quads/back/arms/core over time.</div>';
     html += '<div class="plan-tip"><strong>Around exams:</strong> if a day gets missed for prelim study, don\'t double up to "catch up" — just pick back up on the next scheduled day.</div>';
 
     el.innerHTML = html;

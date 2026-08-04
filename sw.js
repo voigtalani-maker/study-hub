@@ -1,6 +1,6 @@
 /* Study Hub service worker — offline app shell, no push notifications.
    Bump CACHE when index.html or the shell changes so old copies are dropped. */
-const CACHE = 'studyhub-shell-v6';
+const CACHE = 'studyhub-shell-v7';
 const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
 
 // The photos index.html actually requests — the `?v=2` query is part of the
